@@ -1,37 +1,29 @@
 <!DOCTYPE html>
-<html lang="tg">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>JAIHUN MARKET — Чайхун маркет</title>
 <meta name="theme-color" content="#1f9d55">
 
-<!-- ============ ИКОНКИ САЙТА (ЗАМЕНИТЕ НА СВОИ ФАЙЛЫ) ============ -->
-<!-- Положите ваши иконки по этим путям, чтобы они отображались во вкладке браузера и на смартфоне -->
-
-<!-- 1. Основной favicon для браузера -->
-<link rel="icon" href="favicon.ico" sizes="any">
-<!-- 2. PNG-иконки для разных устройств -->
+<!-- ============ ИКОНКИ САЙТА ============ -->
+<link rel="icon" href="oo.jpg" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="oo.jpg">
 <link rel="icon" type="image/png" sizes="16x16" href="oo.jpg">
-<!-- 3. Иконка для iPhone (должна быть 180x180, БЕЗ прозрачности) -->
 <link rel="apple-touch-icon" sizes="180x180" href="oo.jpg">
-<!-- 4. Манифест для Android -->
 <link rel="manifest" href="manifest.json">
 
-<!-- Режим "как приложение" на iPhone -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="JAIHUN MARKET">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="mobile-web-app-capable" content="yes">
 
-<!-- Шрифт -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* ===================== ПЕРЕМЕННЫЕ ===================== */
+/* ===================== ПЕРЕМЕННЫЕ (СВЕТЛАЯ ТЕМА) ===================== */
 :root{
   --green:#1f9d55;
   --green-dark:#14783f;
@@ -50,10 +42,36 @@
 
   --sh-1:0 2px 8px rgba(18,50,30,.06), 0 1px 2px rgba(18,50,30,.04);
   --sh-2:0 10px 26px rgba(18,50,30,.10), 0 2px 6px rgba(18,50,30,.05);
-  --sh-3:0 18px 44px rgba(18,50,30,.16);
+  
+  /* Переменные для нижней панели */
+  --nav-bg: rgba(255,255,255,.72);
+  --nav-border: rgba(255,255,255,.75);
+  --nav-shadow: 0 14px 36px rgba(18,50,30,.16), 0 2px 8px rgba(18,50,30,.06);
+  --nav-muted: #6b7d72;
+  --nav-active: #1f9d55;
 
   --ease:cubic-bezier(.4,.9,.3,1);
   --bounce:cubic-bezier(.34,1.45,.5,1);
+}
+
+/* ===================== ТЕМНАЯ ТЕМА ===================== */
+body[data-theme="dark"] {
+  --bg:#0f1712;
+  --card:#1a241e;
+  --mint:#1b3324;
+  --text:#e2eae4;
+  --muted:#8d9c93;
+  --line:#2a3b30;
+  --green-light:#1b3324;
+
+  --sh-1:0 2px 8px rgba(0,0,0,.2), 0 1px 2px rgba(0,0,0,.1);
+  --sh-2:0 10px 26px rgba(0,0,0,.3), 0 2px 6px rgba(0,0,0,.2);
+
+  --nav-bg: rgba(16,24,19,.84);
+  --nav-border: rgba(255,255,255,.09);
+  --nav-shadow: 0 16px 38px rgba(0,0,0,.46);
+  --nav-muted: #8d9c93;
+  --nav-active: #4ade80;
 }
 
 /* ===================== БАЗА ===================== */
@@ -65,14 +83,14 @@ body{
   color:var(--text);
   -webkit-font-smoothing:antialiased;
   padding-bottom:calc(104px + env(safe-area-inset-bottom,0px));
-  transition:background .3s var(--ease);
+  transition:background .3s var(--ease), color .3s var(--ease);
 }
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 input{font:inherit;color:inherit;background:none;border:none;outline:none}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 
-/* Контейнер приложения (mobile-first, до 520px) */
+/* Контейнер приложения */
 .app{
   position:relative;
   width:100%;
@@ -82,7 +100,9 @@ a{color:inherit;text-decoration:none}
 }
 @media (min-width:560px){
   body{background:#e9efe9}
+  body[data-theme="dark"]{background:#000}
   .app{background:var(--bg);box-shadow:0 0 70px rgba(18,50,30,.12)}
+  body[data-theme="dark"] .app{box-shadow:0 0 70px rgba(0,0,0,.5)}
 }
 
 /* ===================== СТРАНИЦЫ ===================== */
@@ -102,22 +122,28 @@ a{color:inherit;text-decoration:none}
 .head{
   position:sticky;top:0;z-index:30;
   padding:calc(10px + env(safe-area-inset-top,0px)) 16px 14px;
-  background:linear-gradient(180deg,rgba(243,246,243,.98) 60%,rgba(243,246,243,.86));
+  background:linear-gradient(180deg,var(--bg) 60%,transparent);
   -webkit-backdrop-filter:blur(16px);
   backdrop-filter:blur(16px);
 }
 .head-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:10px;min-width:0}
-.logo{
-  width:42px;height:42px;flex:0 0 auto;
-  border-radius:14px;
-  background:linear-gradient(135deg,#27b365,var(--green-dark));
-  color:#fff;font-size:22px;font-weight:800;
-  display:grid;place-items:center;
-  box-shadow:0 8px 18px rgba(31,157,85,.32);
-  transition:transform .3s var(--bounce);
+
+/* Кнопка бренда */
+.brand{
+  display:flex;align-items:center;gap:10px;min-width:0;
+  text-align:left; padding: 2px; border-radius: 12px;
+  transition: transform 0.2s var(--ease);
 }
-.logo:active{transform:scale(.92) rotate(-6deg)}
+.brand:active { transform: scale(0.96); }
+.logo{
+  width:44px;height:44px;flex:0 0 auto;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 8px 18px rgba(31,157,85,.32);
+}
+.logo img{
+  width:100%;height:100%;object-fit:cover;
+}
 .brand-txt{min-width:0}
 .brand-txt b{
   display:block;font-size:15px;font-weight:800;color:var(--green);
@@ -175,8 +201,8 @@ a{color:inherit;text-decoration:none}
   transition:border-color .25s var(--ease),box-shadow .25s var(--ease);
 }
 .search:focus-within{border-color:var(--green);box-shadow:0 0 0 4px rgba(31,157,85,.1)}
-.search input{flex:1;min-width:0;font-size:14px;font-weight:600}
-.search input::placeholder{color:#9fada5;font-weight:500}
+.search input{flex:1;min-width:0;font-size:14px;font-weight:600;color:var(--text)}
+.search input::placeholder{color:var(--muted);font-weight:500}
 
 /* ===================== КАТЕГОРИИ ===================== */
 .chips{
@@ -227,30 +253,37 @@ a{color:inherit;text-decoration:none}
   position:relative;
   aspect-ratio:1/1;
   border-radius:18px;
-  background:radial-gradient(120% 120% at 30% 20%,#effaf1,var(--mint));
+  background:radial-gradient(120% 120% at 30% 20%,var(--card),var(--mint));
   display:grid;place-items:center;
-  font-size:46px;line-height:1;
   overflow:hidden;
 }
-.card-img .emoji{transition:transform .3s var(--bounce)}
+.card-img img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:transform .4s var(--ease);
+}
+.card:hover .card-img img{transform:scale(1.08);}
+.card-img .emoji{
+  font-size:46px;line-height:1;
+  transition:transform .3s var(--bounce);
+}
 .card:hover .card-img .emoji{transform:scale(1.08)}
 
 .heart{
   position:absolute;top:6px;right:6px;
   width:30px;height:30px;border-radius:50%;
-  background:rgba(255,255,255,.88);
+  background:var(--card);
   display:grid;place-items:center;
   font-size:14px;line-height:1;
   box-shadow:0 3px 8px rgba(18,50,30,.12);
   transition:transform .2s var(--bounce),background .2s;
+  z-index:2;
 }
 .heart:active{transform:scale(.85)}
 .heart.on{animation:heartPop .45s var(--bounce)}
 @keyframes heartPop{
-  0%{transform:scale(1)}
-  40%{transform:scale(1.35)}
-  70%{transform:scale(.92)}
-  100%{transform:scale(1)}
+  0%{transform:scale(1)} 40%{transform:scale(1.35)}
+  70%{transform:scale(.92)} 100%{transform:scale(1)}
 }
 
 .card-body{display:flex;flex-direction:column;flex:1;padding:10px 6px 0}
@@ -310,7 +343,9 @@ a{color:inherit;text-decoration:none}
   flex:0 0 auto;width:54px;height:54px;
   border-radius:16px;background:var(--mint);
   display:grid;place-items:center;font-size:26px;
+  overflow:hidden;
 }
+.ci-thumb img{width:100%;height:100%;object-fit:cover;}
 .ci-info{flex:1;min-width:0}
 .ci-info b{display:block;font-size:13px;font-weight:700;line-height:1.25}
 .ci-info span{display:block;margin-top:3px;font-size:12.5px;font-weight:800;color:var(--green)}
@@ -331,15 +366,27 @@ a{color:inherit;text-decoration:none}
   border-top:1.5px dashed var(--line);
   font-size:19px;font-weight:800;color:var(--green);
 }
-.btn-primary{
-  width:100%;margin-top:14px;padding:15px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#25ad60,var(--green-dark));
-  color:#fff;font-size:15px;font-weight:800;
-  box-shadow:0 12px 26px rgba(31,157,85,.34);
+
+/* Кнопки оформления заказа */
+.checkout-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+.btn-checkout{
+  flex: 1;
+  padding: 14px 10px;
+  border-radius: 16px;
+  color:#fff;font-size:14px;font-weight:800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   transition:transform .18s var(--ease),box-shadow .18s var(--ease);
 }
-.btn-primary:active{transform:scale(.975);box-shadow:0 6px 16px rgba(31,157,85,.3)}
+.btn-checkout:active{transform:scale(.96);}
+.btn-wa{ background: #25D366; box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3); }
+.btn-tg{ background: #0088cc; box-shadow: 0 6px 16px rgba(0, 136, 204, 0.3); }
 
 /* ===================== ПРОФИЛЬ ===================== */
 .profile-hero{
@@ -399,17 +446,23 @@ a{color:inherit;text-decoration:none}
   width:calc(100% - 28px);max-width:492px;
   display:flex;align-items:stretch;
   padding:6px;border-radius:26px;
-  --nav-muted:#6b7d72;
-  --nav-active:#1f9d55;
+  background: var(--nav-bg);
+  -webkit-backdrop-filter:blur(20px) saturate(1.7);
+  backdrop-filter:blur(20px) saturate(1.7);
+  border:1px solid var(--nav-border);
+  box-shadow:var(--nav-shadow);
   transition:background .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);
 }
 .nav-pill{
   position:absolute;top:6px;bottom:6px;left:6px;
   width:calc((100% - 12px) / 4);
   border-radius:20px;z-index:0;
+  background:var(--green-light);
   transform:translateX(calc(var(--i,0) * 100%));
   transition:transform .42s var(--bounce),background .3s var(--ease);
 }
+body[data-theme="dark"] .nav-pill{ background: rgba(74,222,128,.16); }
+
 .ni{
   position:relative;z-index:1;
   flex:1;min-width:0;
@@ -439,49 +492,7 @@ a{color:inherit;text-decoration:none}
 }
 .ni .badge{position:absolute;top:-6px;left:11px}
 .badge.pop{animation:badgePop .45s var(--bounce)}
-@keyframes badgePop{
-  0%{transform:scale(1)}
-  45%{transform:scale(1.45)}
-  100%{transform:scale(1)}
-}
-
-/* --- Тема 1: Стекло (светлая) --- */
-body[data-nav="glass"] .nav{
-  background:rgba(255,255,255,.72);
-  -webkit-backdrop-filter:blur(20px) saturate(1.7);
-  backdrop-filter:blur(20px) saturate(1.7);
-  border:1px solid rgba(255,255,255,.75);
-  box-shadow:0 14px 36px rgba(18,50,30,.16),0 2px 8px rgba(18,50,30,.06);
-  --nav-muted:#6b7d72;
-  --nav-active:#1f9d55;
-}
-body[data-nav="glass"] .nav-pill{background:rgba(31,157,85,.13)}
-
-/* --- Тема 2: Тёмная --- */
-body[data-nav="dark"] .nav{
-  background:rgba(16,24,19,.84);
-  -webkit-backdrop-filter:blur(20px) saturate(1.4);
-  backdrop-filter:blur(20px) saturate(1.4);
-  border:1px solid rgba(255,255,255,.09);
-  box-shadow:0 16px 38px rgba(0,0,0,.46);
-  --nav-muted:#8d9c93;
-  --nav-active:#4ade80;
-}
-body[data-nav="dark"] .nav-pill{background:rgba(74,222,128,.16)}
-body[data-nav="dark"] .ni .badge{box-shadow:0 0 0 2px rgba(16,24,19,.9)}
-
-/* --- Тема 3: Зелёная --- */
-body[data-nav="green"] .nav{
-  background:linear-gradient(135deg,#23ab5e,#14783f);
-  box-shadow:0 16px 36px rgba(31,157,85,.42);
-  --nav-muted:rgba(255,255,255,.78);
-  --nav-active:#0f5c31;
-}
-body[data-nav="green"] .nav-pill{
-  background:#ffffff;
-  box-shadow:0 5px 14px rgba(0,0,0,.2);
-}
-body[data-nav="green"] .ni .badge{box-shadow:0 0 0 2px #1f9d55}
+@keyframes badgePop{0%{transform:scale(1)}45%{transform:scale(1.45)}100%{transform:scale(1)}}
 
 /* ===================== TOAST ===================== */
 .toast{
@@ -505,7 +516,7 @@ body[data-nav="green"] .ni .badge{box-shadow:0 0 0 2px #1f9d55}
 }
 </style>
 </head>
-<body data-nav="glass">
+<body data-theme="light">
 
 <div class="app">
 
@@ -513,15 +524,20 @@ body[data-nav="green"] .ni .badge{box-shadow:0 0 0 2px #1f9d55}
   <section class="page active" id="home">
     <header class="head">
       <div class="head-top">
-        <div class="brand">
-          <div class="logo" aria-hidden="true">J</div>
+        
+        <!-- Кнопка бренда с картинкой -->
+        <button class="brand" onclick="go('home')">
+          <div class="logo" aria-hidden="true">
+            <img src="oo.jpg" alt="Jaihun Market">
+          </div>
           <div class="brand-txt">
             <b>JAIHUN MARKET</b>
             <small>Чайхун маркет</small>
           </div>
-        </div>
+        </button>
+
         <div class="head-actions">
-          <button class="lang-btn" id="langBtn" onclick="cycleLang()" aria-label="Иваз кардани забон">TJ</button>
+          <button class="lang-btn" id="langBtn" onclick="cycleLang()" aria-label="Иваз кардани забон">RU</button>
           <button class="cart-btn" onclick="go('cart')" aria-label="Сабад">
             🛒<i class="badge" id="cartBadge">0</i>
           </button>
@@ -531,21 +547,21 @@ body[data-nav="green"] .ni .badge{box-shadow:0 0 0 2px #1f9d55}
       <button class="addr" onclick="editAddr()">
         <span class="pin" aria-hidden="true">📍</span>
         <span class="addr-txt" id="addrTxt"></span>
-        <span class="now" data-i18n="now">Ҳозир</span>
+        <span class="now" data-i18n="now">Сейчас</span>
       </button>
 
       <div class="search">
         <span aria-hidden="true">🔍</span>
         <input id="searchInput" type="search" autocomplete="off"
-               data-i18n-ph="search" placeholder="Ҷустуҷӯи маҳсулот"
-               aria-label="Ҷустуҷӯи маҳсулот">
+               data-i18n-ph="search" placeholder="Поиск товаров"
+               aria-label="Поиск товаров">
       </div>
     </header>
 
     <div class="chips" id="chips"></div>
 
     <div class="sec-head">
-      <h2 id="secTitle">Ҳамаи маҳсулот</h2>
+      <h2 id="secTitle">Все товары</h2>
       <span class="sec-count" id="secCount"></span>
     </div>
 
@@ -555,8 +571,8 @@ body[data-nav="green"] .ni .badge{box-shadow:0 0 0 2px #1f9d55}
   <!-- ======================= КОРЗИНА ======================= -->
   <section class="page" id="cart">
     <div class="page-head">
-      <h1 data-i18n="cart">Сабад</h1>
-      <button class="link-btn" onclick="clearCart()" data-i18n="clear">Тоза кардан</button>
+      <h1 data-i18n="cart">Корзина</h1>
+      <button class="link-btn" onclick="clearCart()" data-i18n="clear">Очистить</button>
     </div>
     <div id="cartList"></div>
     <div class="summary" id="summary"></div>
@@ -565,7 +581,7 @@ body[data-nav="green"] .ni .badge{box-shadow:0 0 0 2px #1f9d55}
   <!-- ======================= ИЗБРАННОЕ ======================= -->
   <section class="page" id="favs">
     <div class="page-head">
-      <h1 data-i18n="favs">Дӯстдошта</h1>
+      <h1 data-i18n="favs">Избранное</h1>
     </div>
     <div class="grid" id="favGrid"></div>
   </section>
@@ -575,14 +591,14 @@ body[data-nav="green"] .ni .badge{box-shadow:0 0 0 2px #1f9d55}
     <div class="profile-hero">
       <div class="avatar" aria-hidden="true">👤</div>
       <div>
-        <h2 data-i18n="guest">Меҳмон</h2>
-        <p data-i18n="noPhone">Телефон нишон дода нашудааст</p>
+        <h2 data-i18n="guest">Гость</h2>
+        <p data-i18n="noPhone">Телефон не указан</p>
       </div>
     </div>
 
     <!-- Язык -->
     <div class="panel">
-      <div class="panel-title" data-i18n="language">Забон</div>
+      <div class="panel-title" data-i18n="language">Язык</div>
       <div class="seg" id="langSeg">
         <button data-lang="tg" onclick="setLang('tg')">Тоҷикӣ</button>
         <button data-lang="ru" onclick="setLang('ru')">Русский</button>
@@ -590,28 +606,27 @@ body[data-nav="green"] .ni .badge{box-shadow:0 0 0 2px #1f9d55}
       </div>
     </div>
 
-    <!-- Тема нижней панели -->
+    <!-- Глобальная тема -->
     <div class="panel">
-      <div class="panel-title" data-i18n="navTheme">Мавзӯи меню</div>
+      <div class="panel-title" data-i18n="appTheme">Тема приложения</div>
       <div class="seg" id="themeSeg">
-        <button data-theme="glass" onclick="setNavTheme('glass')">🧊 <span data-i18n="themeGlass">Шиша</span></button>
-        <button data-theme="dark" onclick="setNavTheme('dark')">🌙 <span data-i18n="themeDark">Торик</span></button>
-        <button data-theme="green" onclick="setNavTheme('green')">💚 <span data-i18n="themeGreen">Сабз</span></button>
+        <button data-theme="light" onclick="setAppTheme('light')">☀️ <span data-i18n="themeLight">Светлая</span></button>
+        <button data-theme="dark" onclick="setAppTheme('dark')">🌙 <span data-i18n="themeDark">Тёмная</span></button>
       </div>
     </div>
 
     <!-- Настройки -->
     <div class="panel list">
       <button class="row-item" onclick="editAddr()">
-        <span>📍 <span data-i18n="addressRow">Суроғаи интиқол</span></span>
+        <span>📍 <span data-i18n="addressRow">Адрес доставки</span></span>
         <span class="val">›</span>
       </button>
       <a class="row-item" href="tel:+992900000000">
-        <span>📞 <span data-i18n="hotline">Хати гарм</span></span>
+        <span>📞 <span data-i18n="hotline">Горячая линия</span></span>
         <span class="val">+992 90 000 00 00</span>
       </a>
       <button class="row-item danger" onclick="clearData()">
-        <span>🗑️ <span data-i18n="clearData">Тоза кардани маълумот</span></span>
+        <span>🗑️ <span data-i18n="clearData">Очистить данные</span></span>
         <span class="val">›</span>
       </button>
     </div>
@@ -620,27 +635,27 @@ body[data-nav="green"] .ni .badge{box-shadow:0 0 0 2px #1f9d55}
 </div>
 
 <!-- ======================= НИЖНЯЯ НАВИГАЦИЯ ======================= -->
-<nav class="nav" id="nav" aria-label="Асосӣ">
+<nav class="nav" id="nav" aria-label="Основная">
   <span class="nav-pill" aria-hidden="true"></span>
 
-  <button class="ni on" data-page="home" onclick="go('home')" aria-label="Асосӣ">
+  <button class="ni on" data-page="home" onclick="go('home')" aria-label="Главная">
     <span class="ico">🏠</span>
-    <span class="lbl" data-i18n="home">Асосӣ</span>
+    <span class="lbl" data-i18n="home">Главная</span>
   </button>
 
-  <button class="ni" data-page="cart" onclick="go('cart')" aria-label="Сабад">
+  <button class="ni" data-page="cart" onclick="go('cart')" aria-label="Корзина">
     <span class="ico">🛒<i class="badge" id="navCartBadge">0</i></span>
-    <span class="lbl" data-i18n="cart">Сабад</span>
+    <span class="lbl" data-i18n="cart">Корзина</span>
   </button>
 
-  <button class="ni" data-page="favs" onclick="go('favs')" aria-label="Дӯстдошта">
+  <button class="ni" data-page="favs" onclick="go('favs')" aria-label="Избранное">
     <span class="ico">❤️<i class="badge" id="navFavBadge">0</i></span>
-    <span class="lbl" data-i18n="favs">Дӯстдошта</span>
+    <span class="lbl" data-i18n="favs">Избранное</span>
   </button>
 
-  <button class="ni" data-page="profile" onclick="go('profile')" aria-label="Профил">
+  <button class="ni" data-page="profile" onclick="go('profile')" aria-label="Профиль">
     <span class="ico">👤</span>
-    <span class="lbl" data-i18n="profile">Профил</span>
+    <span class="lbl" data-i18n="profile">Профиль</span>
   </button>
 </nav>
 
@@ -651,7 +666,7 @@ body[data-nav="green"] .ni .badge{box-shadow:0 0 0 2px #1f9d55}
 /* ============================================================
    1. КОНСТАНТЫ
    ============================================================ */
-const CURRENCY = 'с.';              // ← Таджикская валюта (сомони)
+const CURRENCY = 'с.';              
 const LANG_LABEL = { tg:'TJ', ru:'RU', en:'EN' };
 const NAV_ORDER  = ['home','cart','favs','profile'];
 
@@ -659,7 +674,7 @@ const LS = {
   lang:'jm_lang',
   cart:'jm_cart',
   favs:'jm_favs',
-  nav :'jm_nav',
+  theme:'jm_theme',
   addr:'jm_addr'
 };
 
@@ -678,18 +693,18 @@ const I18N = {
     emptyFavs:'❤️ Маҳсулоти дӯстдоштаро илова кунед',
     notFound:'🔍 Чизе ёфт нашуд',
     items:'Молҳо', delivery:'Интиқол', free:'Ройгон', total:'Ҳамагӣ',
-    checkout:'Супориш додан',
+    checkoutWa:'WhatsApp', checkoutTg:'Telegram',
     added:'ба сабад илова шуд',
     orderDone:'✅ Супориш қабул шуд. Ташаккур!',
     cartEmptyToast:'🛒 Сабад холӣ аст',
     guest:'Меҳмон',
     noPhone:'Телефон нишон дода нашудааст',
     language:'Забон',
-    navTheme:'Мавзӯи меню',
+    appTheme:'Мавзӯи барнома',
     hotline:'Хати гарм',
     clearData:'Тоза кардани маълумот',
     addressRow:'Суроғаи интиқол',
-    themeGlass:'Шиша', themeDark:'Торик', themeGreen:'Сабз',
+    themeLight:'Равшан', themeDark:'Торик',
     clearAsk:'Ҳамаи маълумотро тоза кунем?',
     productsCount:'мол'
   },
@@ -704,18 +719,18 @@ const I18N = {
     emptyFavs:'❤️ Добавьте любимые товары',
     notFound:'🔍 Ничего не найдено',
     items:'Товары', delivery:'Доставка', free:'Бесплатно', total:'Итого',
-    checkout:'Оформить заказ',
+    checkoutWa:'WhatsApp', checkoutTg:'Telegram',
     added:'добавлен в корзину',
     orderDone:'✅ Заказ принят. Спасибо!',
     cartEmptyToast:'🛒 Корзина пуста',
     guest:'Гость',
     noPhone:'Телефон не указан',
     language:'Язык',
-    navTheme:'Тема меню',
+    appTheme:'Тема приложения',
     hotline:'Горячая линия',
     clearData:'Очистить данные',
     addressRow:'Адрес доставки',
-    themeGlass:'Стекло', themeDark:'Тёмная', themeGreen:'Зелёная',
+    themeLight:'Светлая', themeDark:'Тёмная',
     clearAsk:'Очистить все данные?',
     productsCount:'товаров'
   },
@@ -730,18 +745,18 @@ const I18N = {
     emptyFavs:'❤️ Add your favorite products',
     notFound:'🔍 Nothing found',
     items:'Items', delivery:'Delivery', free:'Free', total:'Total',
-    checkout:'Place order',
+    checkoutWa:'WhatsApp', checkoutTg:'Telegram',
     added:'added to cart',
     orderDone:'✅ Order placed. Thank you!',
     cartEmptyToast:'🛒 Your cart is empty',
     guest:'Guest',
     noPhone:'Phone not specified',
     language:'Language',
-    navTheme:'Menu theme',
+    appTheme:'App theme',
     hotline:'Hotline',
     clearData:'Clear data',
     addressRow:'Delivery address',
-    themeGlass:'Glass', themeDark:'Dark', themeGreen:'Green',
+    themeLight:'Light', themeDark:'Dark',
     clearAsk:'Clear all data?',
     productsCount:'items'
   }
@@ -764,6 +779,60 @@ const CATS = [
 /* ============================================================
    4. ТОВАРЫ
    ============================================================ */
+const PRODUCTS = [
+  // --- БАКАЛЕЯ 1 (b1) ---
+  { id:'p1',  cat:'b1', emoji:'🌾', img:'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=300&q=80', tg:'Орди олӣ', ru:'Мука высший сорт', en:'Premium flour', w:'2 кг', price:90  },
+  { id:'p2',  cat:'b1', emoji:'🍚', img:'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=300&q=80', tg:'Биринҷи ош', ru:'Рис для плова', en:'Rice for pilaf', w:'1 кг', price:125 },
+  { id:'p3',  cat:'b1', emoji:'🍝', img:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=300&q=80', tg:'Макарон', ru:'Макароны', en:'Pasta', w:'450 г', price:80  },
+  { id:'p4',  cat:'b1', emoji:'🍬', img:'https://images.unsplash.com/photo-1581441363689-1f3c3c414635?auto=format&fit=crop&w=300&q=80', tg:'Шакар', ru:'Сахар', en:'Sugar', w:'1 кг', price:70  },
+  { id:'p5',  cat:'b1', emoji:'🍞', img:'https://images.unsplash.com/photo-1598373182133-52452f7691ef?auto=format&fit=crop&w=300&q=80', tg:'Нони гарм', ru:'Хлеб', en:'Bread', w:'1 дона', price:25  },
+  { id:'p19', cat:'b1', emoji:'🌰', img:'https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=300&q=80', tg:'Гандуми сиёҳ', ru:'Гречка', en:'Buckwheat', w:'1 кг', price:110 },
+  
+  // --- БАКАЛЕЯ 2 (b2) ---
+  { id:'p6',  cat:'b2', emoji:'🌻', img:'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=300&q=80', tg:'Равғани офтобпараст', ru:'Масло подсолнечное', en:'Sunflower oil', w:'1 л', price:135 },
+  { id:'p7',  cat:'b2', emoji:'☕', img:'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=300&q=80', tg:'Чойи сиёҳ', ru:'Чай чёрный', en:'Black tea', w:'100 халта', price:330 },
+  { id:'p8',  cat:'b2', emoji:'🧂', img:'https://images.unsplash.com/photo-1518110925495-5fe2fda0442c?auto=format&fit=crop&w=300&q=80', tg:'Намак', ru:'Соль', en:'Salt', w:'1 кг', price:25  },
+  { id:'p20', cat:'b2', emoji:'☕', img:'https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&w=300&q=80', tg:'Қаҳва', ru:'Кофе', en:'Coffee', w:'250 г', price:280 },
+  { id:'p21', cat:'b2', emoji:'🍯', img:'https://images.unsplash.com/photo-1587049352847-4d4b1a41c658?auto=format&fit=crop&w=300&q=80', tg:'Асал', ru:'Мёд', en:'Honey', w:'500 г', price:250 },
+  { id:'p22', cat:'b2', emoji:'🌿', img:'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=300&q=80', tg:'Зиравор', ru:'Специи', en:'Spices', w:'50 г', price:40 },
+
+  // --- ГАСТРОНОМИЯ (g1) ---
+  { id:'p9',  cat:'g1', emoji:'🍖', img:'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=300&q=80', tg:'Ҳасиби гӯштӣ', ru:'Колбаса варёная', en:'Boiled sausage', w:'1 кг', price:450 },
+  { id:'p10', cat:'g1', emoji:'🧀', img:'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=300&q=80', tg:'Панири сахт', ru:'Сыр твёрдый', en:'Hard cheese', w:'200 г', price:220 },
+  { id:'p23', cat:'g1', emoji:'🥓', img:'https://images.unsplash.com/photo-1626200419199-391ae4be7a41?auto=format&fit=crop&w=300&q=80', tg:'Салями', ru:'Салями', en:'Salami', w:'300 г', price:320 },
+  { id:'p24', cat:'g1', emoji:'🍗', img:'https://images.unsplash.com/photo-1598514982205-f36b96d1e8d4?auto=format&fit=crop&w=300&q=80', tg:'Мурғи дудӣ', ru:'Курица копчёная', en:'Smoked chicken', w:'1 кг', price:380 },
+  { id:'p25', cat:'g1', emoji:'🥩', img:'https://images.unsplash.com/photo-1603048297172-c92544798d5a?auto=format&fit=crop&w=300&q=80', tg:'Гӯшти гов', ru:'Говядина', en:'Beef', w:'1 кг', price:750 },
+
+  // --- НАПИТКИ (dr) ---
+  { id:'p13', cat:'dr', emoji:'💧', img:'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=300&q=80', tg:'Оби нӯшокӣ', ru:'Вода питьевая', en:'Drinking water', w:'5 л', price:110 },
+  { id:'p14', cat:'dr', emoji:'🥤', img:'https://images.unsplash.com/photo-1629203851122-3726ecdf080e?auto=format&fit=crop&w=300&q=80', tg:'Кола', ru:'Кола', en:'Cola', w:'1.5 л', price:120 },
+  { id:'p26', cat:'dr', emoji:'🧃', img:'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=300&q=80', tg:'Шарбати афлесун', ru:'Сок апельсиновый', en:'Orange juice', w:'1 л', price:150 },
+  { id:'p27', cat:'dr', emoji:'🍵', img:'https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?auto=format&fit=crop&w=300&q=80', tg:'Чойи сабз', ru:'Зелёный чай', en:'Green tea', w:'0.5 л', price:90 },
+  { id:'p28', cat:'dr', emoji:'⚡', img:'https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=300&q=80', tg:'Нӯшокии энергетикӣ', ru:'Энергетик', en:'Energy drink', w:'0.5 л', price:140 },
+
+  // --- МОЛОЧНЫЕ (mk) ---
+  { id:'p11', cat:'mk', emoji:'🥛', img:'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=300&q=80', tg:'Шири 3.2%', ru:'Молоко 3.2%', en:'Milk 3.2%', w:'1 л', price:110 },
+  { id:'p12', cat:'mk', emoji:'🥚', img:'https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&w=300&q=80', tg:'Тухм', ru:'Яйца', en:'Eggs', w:'10 дона', price:110 },
+  { id:'p29', cat:'mk', emoji:'🧈', img:'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=300&q=80', tg:'Равғани ширӣ', ru:'Масло сливочное', en:'Butter', w:'200 г', price:180 },
+  { id:'p30', cat:'mk', emoji:'🍦', img:'https://images.unsplash.com/photo-1488900128323-21503983a07e?auto=format&fit=crop&w=300&q=80', tg:'Қаймоқ', ru:'Сметана', en:'Sour cream', w:'300 г', price:130 },
+  { id:'p31', cat:'mk', emoji:'🥣', img:'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=300&q=80', tg:'Йогурт', ru:'Йогурт', en:'Yogurt', w:'150 г', price:45 },
+
+  // --- ОВОЩИ И ФРУКТЫ (ov) ---
+  { id:'p15', cat:'ov', emoji:'🍅', img:'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=300&q=80', tg:'Помидор', ru:'Помидоры', en:'Tomatoes', w:'1 кг', price:150 },
+  { id:'p16', cat:'ov', emoji:'🍎', img:'https://images.unsplash.com/photo-1560806887-1e4cd0b6fac6?auto=format&fit=crop&w=300&q=80', tg:'Себ', ru:'Яблоки', en:'Apples', w:'1 кг', price:230 },
+  { id:'p32', cat:'ov', emoji:'🍌', img:'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=300&q=80', tg:'Банан', ru:'Бананы', en:'Bananas', w:'1 кг', price:140 },
+  { id:'p33', cat:'ov', emoji:'🥔', img:'https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=300&q=80', tg:'Картошка', ru:'Картофель', en:'Potatoes', w:'1 кг', price:45 },
+  { id:'p34', cat:'ov', emoji:'🧅', img:'https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=300&q=80', tg:'Пиёз', ru:'Лук', en:'Onions', w:'1 кг', price:30 },
+  { id:'p35', cat:'ov', emoji:'🥒', img:'https://images.unsplash.com/photo-1604978007318-5b1f6f7d02e1?auto=format&fit=crop&w=300&q=80', tg:'Бодиринг', ru:'Огурцы', en:'Cucumbers', w:'1 кг', price:80 },
+
+  // --- СЛАДОСТИ (sw) ---
+  { id:'p17', cat:'sw', emoji:'🍫', img:'https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=300&q=80', tg:'Шоколад', ru:'Шоколад', en:'Chocolate', w:'90 г', price:90  },
+  { id:'p18', cat:'sw', emoji:'🍪', img:'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=300&q=80', tg:'Печени', ru:'Печенье к чаю', en:'Cookies', w:'300 г', price:110 },
+  { id:'p36', cat:'sw', emoji:'🍰', img:'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80', tg:'Торти бисквитӣ', ru:'Торт бисквитный', en:'Sponge cake', w:'1 кг', price:250 },
+  { id:'p37', cat:'sw', emoji:'🍦', img:'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=300&q=80', tg:'Яхмос', ru:'Мороженое', en:'Ice cream', w:'500 г', price:180 },
+  { id:'p38', cat:'sw', emoji:'🍬', img:'https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?auto=format&fit=crop&w=300&q=80', tg:'Карамел', ru:'Карамель', en:'Candy', w:'200 г', price:60 }
+];
+
 
 /* ============================================================
    5. СОСТОЯНИЕ
@@ -775,8 +844,10 @@ const readJSON = (key, fallback) => {
   catch (e) { return fallback; }
 };
 
-let lang      = localStorage.getItem(LS.lang) || 'tg';
-let navTheme  = localStorage.getItem(LS.nav)  || 'glass';
+// Язык по умолчанию - РУССКИЙ
+let lang      = localStorage.getItem(LS.lang) || 'ru';
+// Тема по умолчанию - СВЕТЛАЯ
+let appTheme  = localStorage.getItem(LS.theme)  || 'light';
 let cart      = readJSON(LS.cart, {});
 let favs      = readJSON(LS.favs, []);
 let addr      = localStorage.getItem(LS.addr) || '';
@@ -788,7 +859,7 @@ let lastFav   = -1;
 /* ============================================================
    6. ХЕЛПЕРЫ
    ============================================================ */
-const t       = k => (I18N[lang] && I18N[lang][k]) || I18N.tg[k] || k;
+const t       = k => (I18N[lang] && I18N[lang][k]) || I18N.ru[k] || k;
 const money   = n => n + ' ' + CURRENCY;
 const byId    = id => PRODUCTS.find(p => p.id === id);
 const pName   = p => p[lang] || p.ru;
@@ -825,11 +896,11 @@ function applyI18n(){
   els('[data-i18n-ph]').forEach(n => { n.placeholder = t(n.dataset.i18nPh); });
 
   document.documentElement.lang = lang;
-  el('langBtn').textContent = LANG_LABEL[lang] || 'TJ';
+  el('langBtn').textContent = LANG_LABEL[lang] || 'RU';
   el('addrTxt').textContent = addr || t('address');
 
   els('#langSeg button').forEach(b => b.classList.toggle('on', b.dataset.lang === lang));
-  els('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.theme === navTheme));
+  els('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.theme === appTheme));
 }
 
 function renderTitle(){
@@ -848,10 +919,15 @@ function cardHTML(p){
   const q   = cart[p.id] || 0;
   const fav = favs.includes(p.id);
 
+  const imgHTML = p.img 
+    ? `<img src="${p.img}" alt="${pName(p)}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+       <span class="emoji" style="display:none" aria-hidden="true">${p.emoji}</span>`
+    : `<span class="emoji" aria-hidden="true">${p.emoji}</span>`;
+
   return `
   <article class="card">
     <div class="card-img">
-      <span class="emoji" aria-hidden="true">${p.emoji}</span>
+      ${imgHTML}
       <button class="heart ${fav ? 'on' : ''}" onclick="toggleFav('${p.id}')"
               aria-label="${t('favs')}">${fav ? '❤️' : '🤍'}</button>
     </div>
@@ -867,7 +943,7 @@ function cardHTML(p){
             <button onclick="changeQty('${p.id}',1)" aria-label="+">+</button>
           </div>`
         : `<button class="add-btn" onclick="changeQty('${p.id}',1)"
-                   aria-label="${t('checkout')}">+</button>`}
+                   aria-label="${t('checkoutWa')}">+</button>`}
       </div>
     </div>
   </article>`;
@@ -899,9 +975,15 @@ function renderCart(){
 
   el('cartList').innerHTML = ids.map(id => {
     const p = byId(id), q = cart[id];
+    
+    const thumbHTML = p.img 
+      ? `<img src="${p.img}" alt="${pName(p)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+         <span style="display:none">${p.emoji}</span>`
+      : `<span>${p.emoji}</span>`;
+
     return `
     <div class="cart-item">
-      <div class="ci-thumb" aria-hidden="true">${p.emoji}</div>
+      <div class="ci-thumb" aria-hidden="true">${thumbHTML}</div>
       <div class="ci-info">
         <b>${pName(p)}</b>
         <span>${money(p.price * q)}</span>
@@ -915,11 +997,21 @@ function renderCart(){
   }).join('');
 
   const total = cartTotal();
+  
+  // Кнопки WhatsApp и Telegram
   el('summary').innerHTML = `
     <div class="sum-row"><span>${t('items')}</span><span>${money(total)}</span></div>
     <div class="sum-row"><span>${t('delivery')}</span><span class="free">${t('free')}</span></div>
     <div class="sum-total"><span>${t('total')}</span><span>${money(total)}</span></div>
-    <button class="btn-primary" onclick="checkout()">${t('checkout')}</button>`;
+    
+    <div class="checkout-actions">
+      <button class="btn-checkout btn-wa" onclick="checkout('wa')">
+        <span>🟢</span> ${t('checkoutWa')}
+      </button>
+      <button class="btn-checkout btn-tg" onclick="checkout('tg')">
+        <span>🔵</span> ${t('checkoutTg')}
+      </button>
+    </div>`;
 }
 
 function renderFavs(){
@@ -1012,15 +1104,35 @@ function toggleFav(id){
   updateBadges();
 }
 
-function checkout(){
+/* Функция оформления заказа в мессенджеры */
+function checkout(method){
   if (!cartCount()){ showToast(t('cartEmptyToast')); return; }
 
-  cart = {};
-  saveCart();
+  // Формируем текст заказа
+  let orderText = `🛒 *Новый заказ в JAIHUN MARKET!*\n\n`;
+  if(addr) orderText += `📍 Адрес: ${addr}\n\n`;
+  orderText += `📦 *Состав заказа:*\n`;
 
-  go('home');
-  renderAll();
-  showToast(t('orderDone'));
+  Object.entries(cart).forEach(([id, q]) => {
+    const p = byId(id);
+    if(p) orderText += `- ${pName(p)} (${q} шт) = ${p.price * q} с.\n`;
+  });
+
+  orderText += `\n💰 *Итого: ${cartTotal()} с.*`;
+
+  const encodedText = encodeURIComponent(orderText);
+  // ВАШ НОМЕР ТЕЛЕФОНА (замените на свой реальный)
+  const phone = '992900000000'; 
+
+  if (method === 'wa') {
+    window.open(`https://wa.me/${phone}?text=${encodedText}`, '_blank');
+  } else if (method === 'tg') {
+    // Открывает окно выбора чата в Telegram с готовым текстом
+    window.open(`https://t.me/share/url?url=${encodeURIComponent('Заказ из JAIHUN MARKET')}&text=${encodedText}`, '_blank');
+  }
+
+  // Опционально: очистка корзины после перехода
+  // cart = {}; saveCart(); go('home'); renderAll();
 }
 
 function editAddr(){
@@ -1053,18 +1165,19 @@ function cycleLang(){
   setLang(order[(order.indexOf(lang) + 1) % order.length]);
 }
 
-function setNavTheme(name){
-  navTheme = name;
-  localStorage.setItem(LS.nav, name);
-  document.body.dataset.nav = name;
-  els('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.theme === name));
+function setAppTheme(theme){
+  appTheme = theme;
+  localStorage.setItem(LS.theme, theme);
+  document.body.dataset.theme = theme;
+  els('#themeSeg button').forEach(b => b.classList.toggle('on', b.dataset.theme === theme));
 }
 
 /* ============================================================
    10. ИНИЦИАЛИЗАЦИЯ
    ============================================================ */
 function init(){
-  document.body.dataset.nav = navTheme;
+  // Применяем сохраненную тему при загрузке
+  document.body.dataset.theme = appTheme;
   el('nav').style.setProperty('--i', 0);
 
   el('searchInput').addEventListener('input', e => {
