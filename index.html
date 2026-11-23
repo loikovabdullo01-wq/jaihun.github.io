@@ -48,11 +48,7 @@ main::-webkit-scrollbar{display:none}
 .section-title a{font-size:13px;color:var(--primary);font-weight:700;cursor:pointer;text-decoration:none}
 .banner-slider{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
 .banner-slider::-webkit-scrollbar{display:none}
-.banner{min-width:100%;scroll-snap-align:start;height:140px;border-radius:var(--radius);background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;flex-direction:column;justify-content:center;padding:20px;color:#fff;position:relative;overflow:hidden}
-.banner:nth-child(2){background:linear-gradient(135deg,#14783f,#1f9d55)}
-.banner h3{font-size:20px;margin-bottom:8px;z-index:2;font-weight:800}
-.banner p{font-size:13px;opacity:.9;z-index:2;font-weight:600}
-.banner::after{content:'';position:absolute;right:-20px;bottom:-20px;width:120px;height:120px;background:rgba(255,255,255,.15);border-radius:50%}
+.banner{min-width:100%;scroll-snap-align:start;overflow:hidden;position:relative}
 .categories-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
 .category-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
 .category-item:active{transform:scale(.95)}
@@ -195,11 +191,8 @@ nav.bottom-nav{position:fixed;bottom:0;width:100%;max-width:480px;height:calc(va
 .w-btn{width:100%;padding:15px;border:0;border-radius:var(--radius-sm);background:var(--primary);color:#fff;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 18px rgba(31,157,85,.3)}
 .w-btn:active{transform:scale(.98)}
 #banner-slider{padding-bottom:0}
-.banner{height:160px;background-color:var(--primary);background-size:cover;background-position:center;cursor:pointer}
-.banner.has-img{padding:18px 20px;justify-content:flex-end}
-.banner.has-img::after{display:none}
-.banner.has-img h3,.banner.has-img p{text-shadow:0 1px 6px rgba(0,0,0,.5)}
-.dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.banner{height:auto;aspect-ratio:1200/215;border-radius:16px;background-color:var(--border);background-size:cover;background-position:center;cursor:pointer;padding:0}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:8px}
 .dots i{width:6px;height:6px;border-radius:6px;background:var(--border);transition:all .3s}
 .dots i.on{width:18px;background:var(--primary)}
 </style>
@@ -358,15 +351,14 @@ const CUR='с.',FREE=200,FEE=15,WA_PHONE='992971220800',SUPPORT='+992971220800';
 const LS={lang:'jm_lang',cart:'jm_cart',favs:'jm_favs',theme:'jm_theme',profile:'jm_profile',orders:'jm_orders',recent:'jm_recent',onb:'jm_onb'};
 const START=Date.now();
 
-/* ====== БАННЕРЫ: меняйте картинки и тексты здесь ======
-   img  — имя файла рядом с index.html (banner1.jpg) или ссылка https://...
-          Размер: 1200×430 px (формат ~2.8:1), JPG/WebP до 200 КБ.
-   title/text — заголовок и подпись на трёх языках (пустая строка '' = без текста).
-   link — куда вести по нажатию: 'catalog', id категории (b1,b2,g1,mk,sw,ch) или '' (никуда).
-   Хотите ещё баннер — скопируйте блок {...} и добавьте через запятую. */
+/* ====== БАННЕРЫ: только картинки, без текста ======
+   img  — имя файла рядом с index.html или ссылка https://...
+          Размер: 1200×215 px (формат 5.6:1), JPG/WebP до 150 КБ.
+   link — куда ведёт нажатие: 'catalog', id категории (b1,b2,g1,mk,sw,ch) или '' (никуда).
+   Ещё баннер — скопируйте строку {...} и добавьте через запятую. */
 const BANNERS=[
- {img:'1.webp',link:'catalog',title:{tg:'',ru:'',en:''},text:{tg:'',ru:'',en:''}},
- {img:'banner2.jpg',link:'',title:{tg:'',ru:'',en:''},text:{tg:'',ru:'',en:''}}
+ {img:'330.jpg',link:'catalog'},
+ {img:'330.jpg',link:''}
 ];
 const $=id=>document.getElementById(id);
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
@@ -539,10 +531,7 @@ function syncCards(){
 function cardQty(id,d){d>0?addToCart(id):updateQty(id,-1)}
 
 function renderBanners(){
-  const L=state.lang;
-  $('banner-slider').innerHTML=BANNERS.map((b,i)=>`<div class="banner ${b.img?'has-img':''}" data-i="${i}" onclick="bannerGo(${i})" ${b.img?`style="background-image:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.05)),url('${b.img}')"`:''}>
-    ${b.title[L]?`<h3>${b.title[L]}</h3>`:''}${b.text[L]?`<p>${b.text[L]}</p>`:''}</div>`).join('');
-  BANNERS.forEach((b,i)=>{if(!b.img)return;const im=new Image();im.onerror=()=>{const e=document.querySelector(`.banner[data-i="${i}"]`);if(e){e.classList.remove('has-img');e.style.backgroundImage='';}};im.src=b.img});
+  $('banner-slider').innerHTML=BANNERS.map((b,i)=>`<div class="banner" data-i="${i}" onclick="bannerGo(${i})" style="background-image:url('${b.img}')"></div>`).join('');
   $('banner-dots').innerHTML=BANNERS.length>1?BANNERS.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join(''):'';
 }
 function bannerGo(i){const l=BANNERS[i].link;if(!l)return;l==='catalog'?(state.cat='all',renderCats(),renderCatalog(),go('catalog')):filterCat(l)}
@@ -685,7 +674,7 @@ function checkout(method){
   txt+=`\n📦 *Таркиби фармоиш:*\n`+rows.map(r=>`- ${r.n} (${r.q} шт) = ${r.s} ${CUR}`).join('\n');
   txt+=`\n\n🚚 Интиқол: ${f?f+' '+CUR:'Ройгон'}\n💰 *Ҳамагӣ: ${total} ${CUR}*\n\n_${t('orderMsg')}_`;
   const enc=encodeURIComponent(txt);
-  window.open(method==='wa'?`https://wa.me/${WA_PHONE}?text=${enc}`:`https://t.me/share/url?url=${encodeURIComponent('Заказ JAIHUN MARKET')}&text=${enc}`,'_blank');
+  window.open(method==='wa'?`https://wa.me/${992971220800}?text=${enc}`:`https://t.me/share/url?url=${encodeURIComponent('Заказ JAIHUN MARKET')}&text=${enc}`,'_blank');
   save(LS.orders,[{date:new Date().toLocaleString(),rows,total},...load(LS.orders,[])].slice(0,20));
   Object.assign(state.profile,{name:name||state.profile.name,phone,address:address||state.profile.address});
   save(LS.profile,state.profile);renderProfile();
