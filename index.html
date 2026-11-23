@@ -1,1796 +1,746 @@
 <!DOCTYPE html>
 <html lang="tg">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#1f9d55">
-    <title>JAIHUN MARKET</title>
-    
-    <!-- ИКОНКИ -->
-    <link rel="icon" href="oo.jpg" sizes="any">
-    <link rel="icon" type="image/png" sizes="32x32" href="oo.jpg">
-    <link rel="apple-touch-icon" sizes="180x180" href="oo.jpg">
-    <link rel="manifest" href="manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="JAIHUN MARKET">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="mobile-web-app-capable" content="yes">
-
-    <!-- ШРИФТ -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <style>
-        /* ================= ПЕРЕМЕННЫЕ И ТЕМЫ ================= */
-        :root {
-            --primary: #1f9d55;
-            --primary-light: #27b365;
-            --accent: #4CAF50;
-            --bg-body: #F3F6F3;
-            --bg-card: #FFFFFF;
-            --text-main: #12201a;
-            --text-muted: #6B7280;
-            --border: #E2EAE4;
-            --danger: #e5484d;
-            --danger-bg: #FEE2E2;
-            --shadow: 0 4px 6px -1px rgba(18, 50, 30, 0.05), 0 2px 4px -1px rgba(18, 50, 30, 0.03);
-            --radius: 20px;
-            --radius-sm: 12px;
-            --transition: all 0.3s ease;
-            --nav-height: 68px;
-            --header-height: 130px;
-        }
-
-        [data-theme="dark"] {
-            --bg-body: #0f1712;
-            --bg-card: #1a241e;
-            --text-main: #e2eae4;
-            --text-muted: #8d9c93;
-            --border: #2a3b30;
-            --danger-bg: #7F1D1D;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-        }
-
-        /* ================= БАЗА ===================== */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-            font-family: 'Manrope', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            transition: background-color 0.3s, color 0.3s;
-            overflow: hidden;
-        }
-
-        #app {
-            max-width: 480px;
-            margin: 0 auto;
-            height: 100vh;
-            background-color: var(--bg-body);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        /* ================= ШАПКА ================= */
-        header {
-            background-color: var(--bg-card);
-            padding: 12px 16px;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            max-width: 480px;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-            transition: var(--transition);
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .logo-img {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            object-fit: cover;
-            box-shadow: 0 3px 8px rgba(31, 157, 85, 0.2);
-        }
-
-        .logo-text {
-            font-weight: 900;
-            font-size: 16px;
-            color: var(--primary);
-            letter-spacing: 0.2px;
-            line-height: 1;
-            text-transform: uppercase;
-        }
-        
-        .logo-text span {
-            display: block;
-            font-size: 8px;
-            color: var(--text-muted);
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-top: 3px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .icon-btn {
-            background: none;
-            border: none;
-            color: var(--text-main);
-            cursor: pointer;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-        .icon-btn:active { background-color: var(--border); transform: scale(0.95); }
-        .icon-btn svg { width: 20px; height: 20px; }
-
-        .lang-btn {
-            background: var(--bg-body);
-            border: 1px solid var(--border);
-            color: var(--primary);
-            font-size: 11px;
-            font-weight: 800;
-            padding: 5px 8px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .badge {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            background-color: var(--danger);
-            color: white;
-            font-size: 9px;
-            font-weight: bold;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid var(--bg-card);
-        }
-
-        .search-bar {
-            display: flex;
-            align-items: center;
-            background-color: var(--bg-body);
-            border-radius: var(--radius-sm);
-            padding: 8px 12px;
-            gap: 8px;
-            border: 1px solid var(--border);
-        }
-        .search-bar input {
-            border: none;
-            background: transparent;
-            flex: 1;
-            color: var(--text-main);
-            font-size: 14px;
-            outline: none;
-        }
-        .search-bar input::placeholder { color: var(--text-muted); }
-        .search-bar svg { color: var(--text-muted); width: 20px; height: 20px; }
-
-        /* ================= КОНТЕНТ ================= */
-        main {
-            flex: 1;
-            overflow-y: auto;
-            padding-top: var(--header-height);
-            padding-bottom: calc(var(--nav-height) + 20px);
-            scroll-behavior: smooth;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        main::-webkit-scrollbar { display: none; }
-
-        .page {
-            display: none;
-            padding: 16px;
-            animation: fadeIn 0.3s ease;
-        }
-        .page.active { display: block; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ================= ГЛАВНАЯ ================= */
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 20px 0 12px;
-        }
-        .section-title h2 { font-size: 18px; font-weight: 800; }
-        .section-title a {
-            font-size: 13px;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .banner-slider {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none;
-            padding-bottom: 8px;
-        }
-        .banner-slider::-webkit-scrollbar { display: none; }
-        .banner {
-            min-width: 100%;
-            scroll-snap-align: start;
-            height: 140px;
-            border-radius: var(--radius);
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 20px;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        .banner h3 { font-size: 20px; margin-bottom: 8px; z-index: 2; font-weight: 800; }
-        .banner p { font-size: 13px; opacity: 0.9; z-index: 2; font-weight: 600; }
-        .banner::after {
-            content: '';
-            position: absolute;
-            right: -20px;
-            bottom: -20px;
-            width: 120px;
-            height: 120px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-top: 12px;
-        }
-        .category-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .category-item:active { transform: scale(0.95); }
-        .category-icon {
-            width: 56px;
-            height: 56px;
-            background-color: var(--bg-card);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: var(--shadow);
-            font-size: 24px;
-        }
-        .category-item span { font-size: 11px; text-align: center; font-weight: 700; }
-
-        /* ================= СЕТКА ТОВАРОВ ================= */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-        }
-        .product-card {
-            background-color: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 12px;
-            box-shadow: var(--shadow);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .product-card:active { transform: scale(0.98); }
-        .product-img-container {
-            width: 100%;
-            height: 120px;
-            border-radius: var(--radius-sm);
-            background-color: var(--bg-body);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 8px;
-            overflow: hidden;
-        }
-        .product-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .product-img.emoji { font-size: 50px; }
-        
-        .fav-btn {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            background: var(--bg-card);
-            border: none;
-            border-radius: 50%;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            color: var(--text-muted);
-            z-index: 2;
-            transition: var(--transition);
-        }
-        .fav-btn.active { color: var(--danger); }
-        .fav-btn svg { width: 16px; height: 16px; }
-
-        .product-price { font-weight: 800; font-size: 15px; color: var(--primary); margin-top: 4px; }
-        .product-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 36px; line-height: 1.3; }
-        .product-dosage { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; }
-        
-        .add-to-cart-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            padding: 8px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            margin-top: auto;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-        }
-        .add-to-cart-btn:active { background-color: var(--primary-light); transform: scale(0.95); }
-        .add-to-cart-btn svg { width: 16px; height: 16px; }
-
-        /* ================= КАТАЛОГ ================= */
-        .catalog-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 12px;
-            scrollbar-width: none;
-        }
-        .catalog-tabs::-webkit-scrollbar { display: none; }
-        .tab-btn {
-            white-space: nowrap;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .tab-btn.active {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .filter-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        /* ================= ДЕТАЛИ ТОВАРА ================= */
-        .product-detail-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            background-color: var(--bg-card);
-            border-radius: var(--radius);
-            margin-bottom: 16px;
-        }
-        .product-detail-img.emoji { display: flex; align-items: center; justify-content: center; font-size: 100px; }
-        .detail-title { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
-        .detail-manufacturer { font-size: 13px; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; }
-        .detail-price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px; }
-        .detail-price { font-size: 24px; font-weight: 800; color: var(--primary); }
-        
-        .stock-info {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 14px;
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        .stock-info svg { width: 20px; height: 20px; flex-shrink: 0; }
-
-        .detail-actions {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-        .detail-actions .add-to-cart-btn { flex: 1; padding: 14px; font-size: 15px; }
-
-        .accordion-item {
-            background-color: var(--bg-card);
-            border-radius: var(--radius-sm);
-            margin-bottom: 8px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-        .accordion-header {
-            padding: 14px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 700;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .accordion-content {
-            padding: 0 16px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
-            font-weight: 500;
-        }
-        .accordion-item.active .accordion-content { padding: 0 16px 16px; max-height: 200px; }
-        .accordion-item.active .accordion-header svg { transform: rotate(180deg); }
-        .accordion-header svg { width: 16px; height: 16px; transition: transform 0.3s; }
-
-        /* ================= КОРЗИНА ================= */
-        .cart-item {
-            display: flex;
-            gap: 12px;
-            background-color: var(--bg-card);
-            padding: 12px;
-            border-radius: var(--radius);
-            margin-bottom: 12px;
-            box-shadow: var(--shadow);
-        }
-        .cart-item-img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: var(--radius-sm);
-            background-color: var(--bg-body);
-        }
-        .cart-item-img.emoji { display: flex; align-items: center; justify-content: center; font-size: 30px; }
-        .cart-item-info { flex: 1; }
-        .cart-item-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-        .cart-item-price { font-size: 15px; font-weight: 800; color: var(--primary); }
-        .cart-item-actions { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
-        .qty-control {
-            display: flex;
-            align-items: center;
-            background-color: var(--bg-body);
-            border-radius: 20px;
-            padding: 2px;
-        }
-        .qty-btn {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: none;
-            background-color: var(--bg-card);
-            color: var(--text-main);
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        .qty-val { width: 30px; text-align: center; font-size: 14px; font-weight: 700; }
-        .remove-btn { background: none; border: none; color: var(--danger); cursor: pointer; margin-left: auto; }
-        .remove-btn svg { width: 18px; height: 18px; }
-
-        .cart-summary {
-            background-color: var(--bg-card);
-            padding: 16px;
-            border-radius: var(--radius);
-            margin-top: 16px;
-            box-shadow: var(--shadow);
-        }
-        .summary-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: var(--text-muted); }
-        .summary-row.total { font-size: 18px; font-weight: 800; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); color: var(--primary); }
-
-        .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; font-weight: 700; }
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            font-size: 14px;
-            font-weight: 600;
-            outline: none;
-        }
-        .form-group input:focus { border-color: var(--primary); }
-
-        .checkout-buttons { display: flex; gap: 10px; margin-top: 16px; }
-        .btn-checkout {
-            flex: 1;
-            padding: 14px;
-            border-radius: var(--radius-sm);
-            font-size: 15px;
-            font-weight: 800;
-            color: white;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .btn-wa { background-color: #25D366; }
-        .btn-tg { background-color: #0088cc; }
-
-        /* ================= ПУСТЫЕ СОСТОЯНИЯ ================= */
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        .empty-state svg { width: 80px; height: 80px; color: var(--border); margin-bottom: 16px; }
-        .empty-state h3 { font-size: 18px; margin-bottom: 8px; font-weight: 800; }
-        .empty-state p { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; font-weight: 600; }
-        .empty-state button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 20px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        /* ================= ПРОФИЛЬ ================= */
-        .profile-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; padding-top: 10px; }
-        
-        .avatar-container {
-            position: relative;
-            cursor: pointer;
-        }
-        .avatar { 
-            width: 70px; 
-            height: 70px; 
-            border-radius: 50%; 
-            background-color: var(--primary-light); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: white; 
-            font-size: 26px; 
-            font-weight: 800; 
-            box-shadow: 0 4px 10px rgba(31,157,85,0.3); 
-            overflow: hidden;
-            border: 2px solid var(--bg-card);
-        }
-        .avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .edit-avatar-icon {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .edit-avatar-icon svg { width: 12px; height: 12px; }
-
-        .profile-info { flex: 1; cursor: pointer; }
-        .profile-info h3 { 
-            font-size: 18px; 
-            margin-bottom: 4px; 
-            font-weight: 800; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-        }
-        .profile-info h3 svg { width: 14px; height: 14px; color: var(--primary); }
-        .profile-info p { font-size: 13px; color: var(--text-muted); font-weight: 600; }
-
-        .menu-list { background-color: var(--bg-card); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-bottom: 16px; }
-        .menu-item { display: flex; align-items: center; padding: 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: var(--transition); }
-        .menu-item:last-child { border-bottom: none; }
-        .menu-item:active { background-color: var(--bg-body); }
-        .menu-icon { width: 36px; height: 36px; border-radius: 10px; background-color: var(--bg-body); display: flex; align-items: center; justify-content: center; color: var(--primary); margin-right: 14px; }
-        .menu-icon svg { width: 20px; height: 20px; }
-        .menu-text { flex: 1; font-size: 15px; font-weight: 700; }
-        .menu-arrow { color: var(--text-muted); }
-        .menu-arrow svg { width: 18px; height: 18px; }
-
-        /* Переключатель темы */
-        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--primary); }
-        input:checked + .slider:before { transform: translateX(20px); }
-
-        /* ================= НИЖНЕЕ МЕНЮ ================= */
-        nav.bottom-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            max-width: 480px;
-            height: var(--nav-height);
-            background-color: var(--bg-card);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 100;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            color: var(--text-muted);
-            font-size: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 20%;
-        }
-        .nav-item svg { width: 24px; height: 24px; }
-        .nav-item.active { color: var(--primary); }
-        .nav-item:active { transform: scale(0.9); }
-        .nav-badge {
-            position: absolute;
-            top: 8px;
-            right: 30%;
-            background-color: var(--danger);
-            color: white;
-            font-size: 9px;
-            font-weight: 800;
-            min-width: 16px;
-            height: 16px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 4px;
-        }
-
-        /* ================= МОДАЛЬНЫЕ ОКНА ================= */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-        .modal-overlay.active { opacity: 1; pointer-events: all; }
-        
-        .modal-content {
-            background-color: var(--bg-card);
-            width: 90%;
-            max-width: 340px;
-            border-radius: var(--radius);
-            padding: 24px;
-            text-align: center;
-            transform: scale(0.9);
-            transition: transform 0.3s;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        .modal-overlay.active .modal-content { transform: scale(1); }
-        
-        .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
-        .modal-text { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; }
-        .modal-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            outline: none;
-        }
-        .modal-input:focus { border-color: var(--primary); }
-        
-        .modal-actions { display: flex; gap: 10px; }
-        .modal-btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-        }
-        .modal-btn.primary { background-color: var(--primary); color: white; }
-        .modal-btn.secondary { background-color: var(--bg-body); color: var(--text-main); }
-
-        /* ================= УВЕДОМЛЕНИЯ ================= */
-        .toast {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            background-color: var(--text-main);
-            color: var(--bg-body);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 2500;
-            pointer-events: none;
-            white-space: nowrap;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-        /* Скелетон */
-        .skeleton {
-            background: linear-gradient(90deg, var(--border) 25%, var(--bg-card) 50%, var(--border) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: var(--radius-sm);
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { position: -200% 0; }
-        }
-        .skeleton-card { height: 220px; border-radius: var(--radius); }
-        .hidden { display: none !important; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#1f9d55">
+<title>JAIHUN MARKET</title>
+<link rel="icon" href="oo.jpg" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="oo.jpg">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="JAIHUN MARKET">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#1f9d55;--primary-light:#27b365;--bg-body:#F3F6F3;--bg-card:#fff;--text-main:#12201a;--text-muted:#6B7280;--border:#E2EAE4;--danger:#e5484d;--danger-bg:#FEE2E2;--shadow:0 4px 6px -1px rgba(18,50,30,.05),0 2px 4px -1px rgba(18,50,30,.03);--radius:20px;--radius-sm:12px;--nav-height:68px;--header-height:122px}
+[data-theme=dark]{--bg-body:#0f1712;--bg-card:#1a241e;--text-main:#e2eae4;--text-muted:#8d9c93;--border:#2a3b30;--danger-bg:#7F1D1D;--shadow:0 4px 6px -1px rgba(0,0,0,.3)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;font-family:'Manrope',sans-serif}
+body{background:var(--bg-body);color:var(--text-main);overflow:hidden;transition:background .3s,color .3s}
+button{font-family:inherit}
+#app{max-width:480px;margin:0 auto;height:100vh;height:100dvh;background:var(--bg-body);position:relative;display:flex;flex-direction:column;box-shadow:0 0 20px rgba(0,0,0,.1);overflow:hidden}
+header{background:var(--bg-card);padding:10px 16px 12px;position:fixed;top:0;width:100%;max-width:480px;z-index:100;border-bottom:1px solid var(--border)}
+.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.logo-container{display:flex;align-items:center;gap:7px;cursor:pointer}
+.logo-img{width:32px;height:32px;border-radius:9px;object-fit:cover;box-shadow:0 2px 6px rgba(31,157,85,.25)}
+.logo-text{font-family:'Sora','Manrope',sans-serif;font-weight:800;font-size:13px;letter-spacing:-.02em;line-height:1;text-transform:uppercase;background:linear-gradient(90deg,#0d5e33,#27b365);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.logo-text span{display:block;font-family:'Manrope',sans-serif;font-size:7px;font-weight:800;letter-spacing:.16em;margin-top:4px;-webkit-text-fill-color:var(--text-muted);color:var(--text-muted)}
+[data-theme=dark] .logo-text{background:linear-gradient(90deg,#3ddc84,#9af0c0);-webkit-background-clip:text;background-clip:text}
+.header-actions{display:flex;gap:6px;align-items:center}
+.icon-btn{background:none;border:none;color:var(--text-main);cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%}
+.icon-btn:active{background:var(--border);transform:scale(.95)}
+.icon-btn svg{width:20px;height:20px}
+.lang-btn{background:var(--bg-body);border:1px solid var(--border);color:var(--primary);font-size:11px;font-weight:800;padding:5px 8px;border-radius:8px;cursor:pointer}
+.badge{position:absolute;top:-2px;right:-2px;background:var(--danger);color:#fff;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;border:2px solid var(--bg-card);padding:0 3px}
+.search-bar{display:flex;align-items:center;background:var(--bg-body);border-radius:var(--radius-sm);padding:8px 12px;gap:8px;border:1px solid var(--border)}
+.search-bar input{border:none;background:transparent;flex:1;color:var(--text-main);font-size:14px;outline:none;min-width:0}
+.search-bar>svg{color:var(--text-muted);width:20px;height:20px}
+#s-clear{display:none;border:0;background:var(--border);color:var(--text-muted);width:20px;height:20px;border-radius:50%;font-size:14px;line-height:1;cursor:pointer}
+main{flex:1;overflow-y:auto;padding-top:var(--header-height);padding-bottom:calc(var(--nav-height) + 84px);scrollbar-width:none}
+main::-webkit-scrollbar{display:none}
+.page{display:none;padding:16px;animation:fadeIn .3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:20px 0 12px}
+.section-title h2{font-size:18px;font-weight:800}
+.section-title a{font-size:13px;color:var(--primary);font-weight:700;cursor:pointer;text-decoration:none}
+.banner-slider{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.banner-slider::-webkit-scrollbar{display:none}
+.banner{min-width:100%;scroll-snap-align:start;height:140px;border-radius:var(--radius);background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;flex-direction:column;justify-content:center;padding:20px;color:#fff;position:relative;overflow:hidden}
+.banner:nth-child(2){background:linear-gradient(135deg,#14783f,#1f9d55)}
+.banner h3{font-size:20px;margin-bottom:8px;z-index:2;font-weight:800}
+.banner p{font-size:13px;opacity:.9;z-index:2;font-weight:600}
+.banner::after{content:'';position:absolute;right:-20px;bottom:-20px;width:120px;height:120px;background:rgba(255,255,255,.15);border-radius:50%}
+.categories-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.category-item{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer}
+.category-item:active{transform:scale(.95)}
+.category-icon{width:56px;height:56px;background:var(--bg-card);border-radius:16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);font-size:24px}
+.category-item span{font-size:11px;text-align:center;font-weight:700}
+.product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.product-card{background:var(--bg-card);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow);position:relative;display:flex;flex-direction:column;cursor:pointer}
+.product-card:active{transform:scale(.98)}
+.product-img-container{width:100%;height:120px;border-radius:var(--radius-sm);background:var(--bg-body);display:flex;align-items:center;justify-content:center;margin-bottom:8px;overflow:hidden}
+.product-img{width:100%;height:100%;object-fit:cover}
+.product-img.emoji{font-size:50px;display:flex;align-items:center;justify-content:center}
+.fav-btn{position:absolute;top:18px;right:18px;background:var(--bg-card);border:none;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.1);color:var(--text-muted);z-index:2}
+.fav-btn.active{color:var(--danger)}
+.fav-btn svg{width:16px;height:16px}
+.disc-badge{position:absolute;top:8px;left:8px;background:var(--danger);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;z-index:2}
+.product-price{font-weight:800;font-size:15px;color:var(--primary);margin-top:4px}
+.product-price s{font-size:12px;color:var(--text-muted);margin-left:4px;font-weight:600}
+.product-name{font-size:13px;font-weight:700;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;height:36px;line-height:1.3}
+.product-dosage{font-size:11px;color:var(--text-muted);margin-bottom:8px;font-weight:600}
+.card-act{margin-top:auto}
+.add-btn{background:var(--primary);color:#fff;border:none;border-radius:var(--radius-sm);padding:9px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+.add-btn:active{background:var(--primary-light);transform:scale(.96)}
+.stepper{display:flex;align-items:center;justify-content:space-between;background:var(--primary);color:#fff;border-radius:var(--radius-sm);padding:3px}
+.stepper button{width:34px;height:30px;border:0;border-radius:9px;background:rgba(255,255,255,.2);color:#fff;font-size:18px;font-weight:800;cursor:pointer}
+.stepper b{font-size:14px}
+.catalog-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;scrollbar-width:none}
+.catalog-tabs::-webkit-scrollbar{display:none}
+.tab-btn{white-space:nowrap;background:var(--bg-card);border:1px solid var(--border);color:var(--text-main);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer}
+.tab-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.filter-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--text-muted)}
+#sort-sel{border:1px solid var(--border);background:var(--bg-card);color:var(--text-main);border-radius:10px;padding:6px 8px;font-size:12px;font-weight:700;outline:none}
+.empty-msg{grid-column:span 2;text-align:center;color:var(--text-muted);padding:30px;font-weight:700}
+.detail-img{width:100%;height:250px;object-fit:cover;background:var(--bg-card);border-radius:var(--radius);margin-bottom:16px;display:flex;align-items:center;justify-content:center;font-size:100px}
+.detail-title{font-size:22px;font-weight:800;margin-bottom:4px}
+.detail-sub{font-size:13px;color:var(--text-muted);margin-bottom:12px;font-weight:600}
+.detail-price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+.detail-price{font-size:24px;font-weight:800;color:var(--primary)}
+.detail-price-row s{font-size:16px;color:var(--text-muted);font-weight:600}
+.stock-info{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--primary);margin-bottom:18px;font-weight:700}
+.detail-actions{display:flex;gap:10px;margin-bottom:8px}
+.detail-actions .card-act{flex:1}
+.detail-actions .add-btn,.detail-actions .stepper{height:48px;font-size:15px}
+.detail-actions .stepper button{height:40px}
+.detail-actions .icon-btn{width:48px;height:48px;border-radius:14px;background:var(--bg-card);border:1px solid var(--border)}
+.dfav.active{color:var(--danger)}
+.cart-item{display:flex;gap:12px;background:var(--bg-card);padding:12px;border-radius:var(--radius);margin-bottom:12px;box-shadow:var(--shadow)}
+.cart-item-img{width:60px;height:60px;object-fit:cover;border-radius:var(--radius-sm);background:var(--bg-body);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.cart-item-price{font-size:15px;font-weight:800;color:var(--primary)}
+.cart-item-actions{display:flex;align-items:center;gap:12px;margin-top:8px}
+.qty-control{display:flex;align-items:center;background:var(--bg-body);border-radius:20px;padding:2px}
+.qty-btn{width:28px;height:28px;border-radius:50%;border:none;background:var(--bg-card);color:var(--text-main);font-size:18px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.qty-val{width:30px;text-align:center;font-size:14px;font-weight:700}
+.remove-btn{background:none;border:none;color:var(--danger);cursor:pointer;margin-left:auto}
+.remove-btn svg{width:18px;height:18px}
+#free-bar{background:var(--bg-card);border-radius:var(--radius-sm);padding:12px;margin-bottom:12px;box-shadow:var(--shadow)}
+.fb-t{font-size:13px;font-weight:700;margin-bottom:8px}.fb-t.ok{color:var(--primary)}
+.fb-track{height:6px;background:var(--border);border-radius:6px;overflow:hidden}
+.fb-track i{display:block;height:100%;background:var(--primary);border-radius:6px;transition:width .4s}
+.cart-summary{background:var(--bg-card);padding:16px;border-radius:var(--radius);margin-top:16px;box-shadow:var(--shadow)}
+.summary-row{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-weight:600;color:var(--text-muted)}
+.summary-row.total{font-size:18px;font-weight:800;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);color:var(--primary)}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:12px;color:var(--text-muted);margin-bottom:4px;font-weight:700}
+.form-group input{width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-main);font-size:14px;font-weight:600;outline:none}
+.form-group input:focus{border-color:var(--primary)}
+.checkout-buttons{display:flex;gap:10px;margin-top:16px}
+.btn-checkout{flex:1;padding:14px;border-radius:var(--radius-sm);font-size:15px;font-weight:800;color:#fff;border:none;cursor:pointer}
+.btn-wa{background:#25D366}.btn-tg{background:#0088cc}
+.empty-state{display:flex;flex-direction:column;align-items:center;padding:40px 20px;text-align:center}
+.empty-state .big{font-size:64px;margin-bottom:12px}
+.empty-state h3{font-size:18px;margin-bottom:8px;font-weight:800}
+.empty-state p{font-size:14px;color:var(--text-muted);margin-bottom:20px;font-weight:600}
+.empty-state button{background:var(--primary);color:#fff;border:none;padding:10px 24px;border-radius:20px;font-weight:700;cursor:pointer}
+.profile-header{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-top:10px}
+.avatar-container{position:relative;cursor:pointer}
+.avatar{width:70px;height:70px;border-radius:50%;background:var(--primary-light);display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;font-weight:800;box-shadow:0 4px 10px rgba(31,157,85,.3);overflow:hidden;border:2px solid var(--bg-card)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.edit-avatar-icon{position:absolute;bottom:0;right:0;background:var(--bg-card);border:1px solid var(--border);width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px}
+.profile-info{flex:1;cursor:pointer}
+.profile-info h3{font-size:18px;margin-bottom:4px;font-weight:800}
+.profile-info p{font-size:13px;color:var(--text-muted);font-weight:600}
+.menu-list{background:var(--bg-card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px}
+.menu-item{display:flex;align-items:center;padding:14px 16px;border-bottom:1px solid var(--border);cursor:pointer}
+.menu-item:last-child{border-bottom:none}
+.menu-item:active{background:var(--bg-body)}
+.menu-icon{width:36px;height:36px;border-radius:10px;background:var(--bg-body);display:flex;align-items:center;justify-content:center;margin-right:14px;font-size:18px}
+.menu-text{flex:1;font-size:15px;font-weight:700}
+.menu-arrow{color:var(--text-muted);font-weight:800}
+.switch{position:relative;display:inline-block;width:44px;height:24px}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;cursor:pointer;inset:0;background:#ccc;transition:.4s;border-radius:24px}
+.slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:#fff;transition:.4s;border-radius:50%}
+input:checked+.slider{background:var(--primary)}
+input:checked+.slider:before{transform:translateX(20px)}
+nav.bottom-nav{position:fixed;bottom:0;width:100%;max-width:480px;height:calc(var(--nav-height) + env(safe-area-inset-bottom));background:var(--bg-card);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;z-index:100;padding-bottom:env(safe-area-inset-bottom)}
+.nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--text-muted);font-size:10px;font-weight:700;cursor:pointer;width:20%;position:relative}
+.nav-item svg{width:24px;height:24px}
+.nav-item.active{color:var(--primary)}
+.nav-badge{position:absolute;top:-4px;right:22%;background:var(--danger);color:#fff;font-size:9px;font-weight:800;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 4px}
+#cart-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-height) + 10px + env(safe-area-inset-bottom));width:calc(100% - 24px);max-width:456px;background:linear-gradient(90deg,#14783f,#1f9d55);color:#fff;border-radius:16px;padding:12px 16px;display:none;justify-content:space-between;align-items:center;font-weight:800;font-size:14px;z-index:90;box-shadow:0 8px 20px rgba(31,157,85,.35);cursor:pointer}
+#to-top{position:fixed;right:14px;bottom:calc(var(--nav-height) + 80px);width:40px;height:40px;border-radius:50%;border:0;background:var(--bg-card);color:var(--primary);box-shadow:0 4px 12px rgba(0,0,0,.18);font-size:18px;font-weight:800;display:none;z-index:90;cursor:pointer}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:2000;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal-content{background:var(--bg-card);width:90%;max-width:340px;border-radius:var(--radius);padding:24px;text-align:center;transform:scale(.9);transition:transform .3s}
+.modal-overlay.active .modal-content{transform:scale(1)}
+.modal-title{font-size:18px;font-weight:800;margin-bottom:12px}
+.modal-text{font-size:14px;color:var(--text-muted);margin-bottom:20px;line-height:1.5;max-height:50vh;overflow-y:auto}
+.modal-input{width:100%;padding:12px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-body);color:var(--text-main);font-size:15px;font-weight:600;margin-bottom:16px;outline:none}
+.modal-actions{display:flex;gap:10px}
+.modal-btn{flex:1;padding:12px;border-radius:var(--radius-sm);font-size:14px;font-weight:700;cursor:pointer;border:none}
+.modal-btn.primary{background:var(--primary);color:#fff}
+.modal-btn.secondary{background:var(--bg-body);color:var(--text-main)}
+.order-row{text-align:left;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text-main)}
+.order-row b{color:var(--primary)}
+.toast{z-index:6000!important;position:fixed;bottom:150px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text-main);color:var(--bg-body);padding:10px 20px;border-radius:20px;font-size:13px;font-weight:700;opacity:0;transition:all .3s;z-index:2500;pointer-events:none;max-width:90%;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.skeleton{background:linear-gradient(90deg,var(--border) 25%,var(--bg-card) 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;height:220px;border-radius:var(--radius)}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.hidden{display:none!important}
+#splash{position:fixed;inset:0;z-index:5000;background:linear-gradient(160deg,#0d5e33,#1f9d55 60%,#27b365);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;transition:opacity .5s,visibility .5s}
+#splash.hide{opacity:0;visibility:hidden}
+.sp-logo{width:92px;height:92px;border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 12px 30px rgba(0,0,0,.25);animation:pop .8s ease both}
+.sp-logo img{width:100%;height:100%;object-fit:cover}
+.sp-name{font-family:'Sora','Manrope',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em;margin-top:22px;animation:fadeIn .8s .2s ease both}
+.sp-sub{font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;opacity:.75;margin-top:8px;animation:fadeIn .8s .3s ease both}
+.sp-bar{width:140px;height:4px;border-radius:4px;background:rgba(255,255,255,.25);margin-top:34px;overflow:hidden}
+.sp-bar i{display:block;height:100%;width:0;background:#fff;border-radius:4px;animation:load 1.7s ease-in-out forwards}
+@keyframes load{to{width:100%}}
+@keyframes pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+#welcome{position:fixed;inset:0;z-index:4000;background:var(--bg-body);display:none;overflow-y:auto}
+#welcome.show{display:block;animation:fadeIn .4s ease}
+.w-wrap{max-width:480px;margin:0 auto;min-height:100%;padding:28px 20px calc(24px + env(safe-area-inset-bottom));display:flex;flex-direction:column;justify-content:center}
+.w-top{display:flex;justify-content:flex-end;margin-bottom:10px}
+.w-ico{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:16px;box-shadow:0 8px 20px rgba(31,157,85,.3)}
+.w-wrap h1{font-size:24px;font-weight:800;margin-bottom:6px}
+.w-wrap>p{font-size:14px;color:var(--text-muted);font-weight:600;margin-bottom:22px;line-height:1.4}
+#w-err{min-height:18px;color:var(--danger);font-size:13px;font-weight:700;margin:2px 0 10px}
+.w-btn{width:100%;padding:15px;border:0;border-radius:var(--radius-sm);background:var(--primary);color:#fff;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 18px rgba(31,157,85,.3)}
+.w-btn:active{transform:scale(.98)}
+#banner-slider{padding-bottom:0}
+.banner{height:160px;background-color:var(--primary);background-size:cover;background-position:center;cursor:pointer}
+.banner.has-img{padding:18px 20px;justify-content:flex-end}
+.banner.has-img::after{display:none}
+.banner.has-img h3,.banner.has-img p{text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:10px}
+.dots i{width:6px;height:6px;border-radius:6px;background:var(--border);transition:all .3s}
+.dots i.on{width:18px;background:var(--primary)}
+</style>
 </head>
 <body>
-
+<div id="splash">
+  <div class="sp-logo"><img src="oo.jpg" alt="" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'%231f9d55\'/><text x=\'50\' y=\'70\' font-size=\'62\' font-weight=\'bold\' fill=\'white\' text-anchor=\'middle\' font-family=\'sans-serif\'>J</text></svg>'"></div>
+  <div class="sp-name">JAIHUN MARKET</div>
+  <div class="sp-sub">Чайхун маркет</div>
+  <div class="sp-bar"><i></i></div>
+</div>
 <div id="app">
-    <!-- ШАПКА -->
-    <header>
-        <div class="header-top">
-            <div class="logo-container" onclick="navigateTo('home')">
-                <img src="oo.jpg" alt="Logo" class="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' rx=\'20\' fill=\'%231f9d55\'/><text x=\'50\' y=\'65\' font-size=\'60\' font-weight=\'bold\' fill=\'white\' text-anchor=\'middle\' font-family=\'sans-serif\'>J</text></svg>'">
-                <div class="logo-text">JAIHUN MARKET<span>Чайхун маркет</span></div>
-            </div>
-            <div class="header-actions">
-                <button class="lang-btn" id="lang-btn" onclick="cycleLang()">TJ</button>
-                <button class="icon-btn" onclick="toggleTheme()" id="theme-btn">
-                    <svg id="theme-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                </button>
-                <button class="icon-btn" onclick="navigateTo('cart')">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                    <span class="badge" id="cart-badge" style="display:none;">0</span>
-                </button>
-            </div>
-        </div>
-        <div class="search-bar">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            <input type="text" id="search-input" placeholder="Ҷустуҷӯи маҳсулот..." oninput="handleSearch(this.value)">
-        </div>
-    </header>
-
-    <!-- ОСНОВНОЙ КОНТЕНТ -->
-    <main>
-        <!-- ГЛАВНАЯ -->
-        <div id="page-home" class="page active">
-            <div class="banner-slider">
-                <div class="banner">
-                    <h3 id="banner-title">Тахфифот то 30%</h3>
-                    <p id="banner-desc">Ба ҳамаи маҳсулоти тоза</p>
-                </div>
-                <div class="banner" style="background: linear-gradient(135deg, #14783f, #1f9d55);">
-                    <h3 id="banner-title2">Интиқоли ройгон</h3>
-                    <p id="banner-desc2">Барои фармоишҳо аз 200 с.</p>
-                </div>
-            </div>
-
-            <div class="section-title"><h2 id="home-cats-title">Категорияҳо</h2></div>
-            <div class="categories-grid" id="home-categories"></div>
-
-            <div class="section-title">
-                <h2 id="home-pop-title">Маҳсулоти машҳур</h2>
-                <a onclick="navigateTo('catalog')" id="home-pop-all">Ҳама</a>
-            </div>
-            <div class="product-grid" id="popular-products"></div>
-
-            <div class="section-title">
-                <h2 id="home-disc-title">Тахфифот</h2>
-                <a onclick="navigateTo('catalog')" id="home-disc-all">Ҳама</a>
-            </div>
-            <div class="product-grid" id="discount-products"></div>
-        </div>
-
-        <!-- КАТАЛОГ -->
-        <div id="page-catalog" class="page">
-            <div class="catalog-tabs" id="catalog-tabs"></div>
-            <div class="filter-bar">
-                <span id="catalog-count">0 мол</span>
-            </div>
-            <div class="product-grid" id="catalog-products"></div>
-        </div>
-
-        <!-- ДЕТАЛИ ТОВАРА -->
-        <div id="page-product" class="page">
-            <button class="icon-btn" style="margin-bottom: 12px; background: var(--bg-card);" onclick="navigateTo('home')">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-            </button>
-            <div id="product-detail-content"></div>
-        </div>
-
-        <!-- ИЗБРАННОЕ -->
-        <div id="page-favorites" class="page">
-            <div class="section-title"><h2 id="fav-title">Дӯстдошта</h2></div>
-            <div id="favorites-list" class="product-grid"></div>
-            <div id="favorites-empty" class="empty-state hidden">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                <h3 id="fav-empty-title">Дар дӯстдошта холӣ аст</h3>
-                <p id="fav-empty-desc">Маҳсулотро илова кунед, то гум накунед</p>
-                <button onclick="navigateTo('catalog')" id="fav-empty-btn">Ба каталог</button>
-            </div>
-        </div>
-
-        <!-- КОРЗИНА -->
-        <div id="page-cart" class="page">
-            <div class="section-title">
-                <h2 id="cart-title">Сабад</h2>
-                <a href="#" onclick="clearCart(); return false;" style="color: var(--danger);" id="cart-clear">Тоза кардан</a>
-            </div>
-            <div id="cart-items"></div>
-            <div id="cart-empty" class="empty-state hidden">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                <h3 id="cart-empty-title">Сабад холӣ аст</h3>
-                <p id="cart-empty-desc">Маҳсулотро аз каталог илова кунед</p>
-                <button onclick="navigateTo('catalog')" id="cart-empty-btn">Ба каталог</button>
-            </div>
-            
-            <div id="checkout-section" class="hidden">
-                <div class="section-title"><h2 id="checkout-title">Бақайдгирии фармоиш</h2></div>
-                
-                <div class="form-group">
-                    <label id="lbl-name">Номи шумо</label>
-                    <input type="text" id="name-input" placeholder="Ном">
-                </div>
-                <div class="form-group">
-                    <label id="lbl-phone">Телефон</label>
-                    <input type="tel" id="phone-input" placeholder="+992 __ ___ __ __">
-                </div>
-                <div class="form-group">
-                    <label id="lbl-address">Суроғаи интиқол</label>
-                    <input type="text" id="address-input" placeholder="Кӯча, хона, ҳуҷра">
-                </div>
-
-                <div class="cart-summary">
-                    <div class="summary-row">
-                        <span id="lbl-items">Молҳо</span>
-                        <span id="summary-subtotal">0 с.</span>
-                    </div>
-                    <div class="summary-row">
-                        <span id="lbl-delivery">Интиқол</span>
-                        <span id="summary-delivery">Ройгон</span>
-                    </div>
-                    <div class="summary-row total">
-                        <span id="lbl-total">Ҳамагӣ</span>
-                        <span id="summary-total">0 с.</span>
-                    </div>
-                </div>
-                
-                <div class="checkout-buttons">
-                    <button class="btn-checkout btn-wa" onclick="checkout('wa')">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        WhatsApp
-                    </button>
-                    <button class="btn-checkout btn-tg" onclick="checkout('tg')">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                        Telegram
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- ПРОФИЛЬ (РАБОЧИЙ) -->
-        <div id="page-profile" class="page">
-            <div class="profile-header">
-                <!-- Аватар с загрузкой -->
-                <div class="avatar-container" onclick="document.getElementById('avatar-upload').click()">
-                    <div class="avatar" id="avatar-display">
-                        <span id="avatar-letter">J</span>
-                        <img id="avatar-img" src="" style="display:none;" alt="Avatar">
-                    </div>
-                    <div class="edit-avatar-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    </div>
-                </div>
-                <input type="file" id="avatar-upload" accept="image/*" style="display:none;" onchange="uploadAvatar(event)">
-                
-                <!-- Имя и телефон (редактируемые) -->
-                <div class="profile-info" onclick="editProfile()">
-                    <h3>
-                        <span id="prof-name">Меҳмон</span>
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                    </h3>
-                    <p id="prof-phone">Телефон нишон дода нашудааст</p>
-                </div>
-            </div>
-
-            <!-- Блок 1: Покупки и доставка -->
-            <div class="menu-list">
-                <div class="menu-item" onclick="openModal('orders')">
-                    <div class="menu-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                    </div>
-                    <div class="menu-text" id="prof-orders">Мои заказы</div>
-                    <div class="menu-arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                </div>
-                <div class="menu-item" onclick="editAddress()">
-                    <div class="menu-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    </div>
-                    <div class="menu-text" id="prof-address">Адреса доставки</div>
-                    <div class="menu-arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                </div>
-            </div>
-
-            <!-- Блок 2: Настройки -->
-            <div class="menu-list">
-                <div class="menu-item" onclick="toggleTheme()">
-                    <div class="menu-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </div>
-                    <div class="menu-text" id="prof-theme">Мавзӯи торик</div>
-                    <label class="switch">
-                        <input type="checkbox" id="theme-switch" onchange="toggleTheme()">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-                <div class="menu-item" onclick="cycleLang()">
-                    <div class="menu-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
-                    </div>
-                    <div class="menu-text" id="prof-lang">Забон: Тоҷикӣ</div>
-                    <div class="menu-arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                </div>
-            </div>
-
-            <!-- Блок 3: Поддержка и инфо -->
-            <div class="menu-list">
-                <div class="menu-item" onclick="openModal('support')">
-                    <div class="menu-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    </div>
-                    <div class="menu-text" id="prof-support">Служба поддержки</div>
-                    <div class="menu-arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                </div>
-                <div class="menu-item" onclick="openModal('about')">
-                    <div class="menu-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    <div class="menu-text" id="prof-about">О приложении</div>
-                    <div class="menu-arrow"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></div>
-                </div>
-                <div class="menu-item" style="color: var(--danger);" onclick="clearData()">
-                    <div class="menu-icon" style="color: var(--danger); background-color: var(--danger-bg);">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                    </div>
-                    <div class="menu-text" id="prof-clear">Тоза кардани маълумот</div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- НИЖНЕЕ МЕНЮ -->
-    <nav class="bottom-nav">
-        <div class="nav-item active" onclick="navigateTo('home')" data-page="home">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-            <span id="nav-home">Асосӣ</span>
-        </div>
-        <div class="nav-item" onclick="navigateTo('catalog')" data-page="catalog">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
-            <span id="nav-catalog">Каталог</span>
-        </div>
-        <div class="nav-item" onclick="navigateTo('favorites')" data-page="favorites">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-            <span id="nav-fav">Дӯстдошта</span>
-        </div>
-        <div class="nav-item" onclick="navigateTo('cart')" data-page="cart" style="position:relative;">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-            <span id="nav-cart">Сабад</span>
-            <span class="nav-badge" id="nav-cart-badge" style="display:none;">0</span>
-        </div>
-        <div class="nav-item" onclick="navigateTo('profile')" data-page="profile">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-            <span id="nav-profile">Профил</span>
-        </div>
-    </nav>
-</div>
-
-<!-- МОДАЛЬНОЕ ОКНО (Универсальное) -->
-<div class="modal-overlay" id="custom-modal" onclick="closeModal(event)">
-    <div class="modal-content" onclick="event.stopPropagation()">
-        <div class="modal-title" id="modal-title">Заголовок</div>
-        <div class="modal-text" id="modal-text">Текст сообщения</div>
-        <input type="text" class="modal-input" id="modal-input" style="display:none;" placeholder="">
-        <div class="modal-actions">
-            <button class="modal-btn secondary" onclick="closeModal()">Отмена</button>
-            <button class="modal-btn primary" id="modal-save-btn" onclick="saveModal()">Сохранить</button>
-        </div>
+<header>
+  <div class="header-top">
+    <div class="logo-container" onclick="go('home')">
+      <img src="oo.jpg" alt="Logo" class="logo-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' rx=\'20\' fill=\'%231f9d55\'/><text x=\'50\' y=\'68\' font-size=\'60\' font-weight=\'bold\' fill=\'white\' text-anchor=\'middle\' font-family=\'sans-serif\'>J</text></svg>'">
+      <div class="logo-text">JAIHUN MARKET<span>Чайхун маркет</span></div>
     </div>
+    <div class="header-actions">
+      <button class="lang-btn" id="lang-btn" onclick="cycleLang()">TJ</button>
+      <button class="icon-btn" onclick="toggleTheme()" id="theme-btn">🌙</button>
+      <button class="icon-btn" onclick="go('cart')">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span class="badge" id="cart-badge">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="search-bar">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    <input type="text" id="search-input" data-p="search" oninput="onSearch(this.value)">
+    <button id="s-clear" onclick="clearSearch()">×</button>
+  </div>
+</header>
+
+<main>
+  <div id="page-home" class="page active">
+    <div class="banner-slider" id="banner-slider"></div>
+    <div class="dots" id="banner-dots"></div>
+    <div class="section-title"><h2 data-t="cats"></h2></div>
+    <div class="categories-grid" id="home-categories"></div>
+    <div id="recent-wrap"></div>
+    <div class="section-title"><h2 data-t="pop"></h2><a onclick="go('catalog')" data-t="all"></a></div>
+    <div class="product-grid" id="popular-products"></div>
+    <div id="disc-wrap">
+      <div class="section-title"><h2 data-t="disc"></h2><a onclick="go('catalog')" data-t="all"></a></div>
+      <div class="product-grid" id="discount-products"></div>
+    </div>
+  </div>
+
+  <div id="page-catalog" class="page">
+    <div class="catalog-tabs" id="catalog-tabs"></div>
+    <div class="filter-bar"><span id="catalog-count"></span><select id="sort-sel" onchange="sortBy=this.value;renderCatalog()"></select></div>
+    <div class="product-grid" id="catalog-products"></div>
+  </div>
+
+  <div id="page-product" class="page">
+    <button class="icon-btn" style="margin-bottom:12px;background:var(--bg-card)" onclick="history.back()">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+    </button>
+    <div id="product-detail-content"></div>
+  </div>
+
+  <div id="page-favorites" class="page">
+    <div class="section-title"><h2 data-t="fav"></h2></div>
+    <div id="favorites-list" class="product-grid"></div>
+    <div id="favorites-empty" class="empty-state hidden"><div class="big">❤️</div><h3 data-t="favEmpty"></h3><p data-t="favEmptyD"></p><button onclick="go('catalog')" data-t="toCat"></button></div>
+  </div>
+
+  <div id="page-cart" class="page">
+    <div class="section-title"><h2 data-t="cart"></h2><a href="#" onclick="clearCart();return false" style="color:var(--danger)" data-t="clear"></a></div>
+    <div id="free-bar"></div>
+    <div id="cart-items"></div>
+    <div id="cart-empty" class="empty-state hidden"><div class="big">🛒</div><h3 data-t="cartEmpty"></h3><p data-t="cartEmptyD"></p><button onclick="go('catalog')" data-t="toCat"></button></div>
+    <div id="checkout-section" class="hidden">
+      <div class="section-title"><h2 data-t="checkout"></h2></div>
+      <div class="form-group"><label data-t="name"></label><input type="text" id="name-input"></div>
+      <div class="form-group"><label data-t="phone"></label><input type="tel" id="phone-input" placeholder="+992 __ ___ __ __" inputmode="tel"></div>
+      <div class="form-group"><label data-t="address"></label><input type="text" id="address-input"></div>
+      <div class="cart-summary">
+        <div class="summary-row"><span data-t="items"></span><span id="sum-sub"></span></div>
+        <div class="summary-row"><span data-t="delivery"></span><span id="sum-del"></span></div>
+        <div class="summary-row total"><span data-t="total"></span><span id="sum-total"></span></div>
+      </div>
+      <div class="checkout-buttons">
+        <button class="btn-checkout btn-wa" onclick="checkout('wa')">WhatsApp</button>
+        <button class="btn-checkout btn-tg" onclick="checkout('tg')">Telegram</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-profile" class="page">
+    <div class="profile-header">
+      <div class="avatar-container" onclick="$('avatar-upload').click()">
+        <div class="avatar"><span id="avatar-letter">J</span><img id="avatar-img" alt="" style="display:none"></div>
+        <div class="edit-avatar-icon">📷</div>
+      </div>
+      <input type="file" id="avatar-upload" accept="image/*" style="display:none" onchange="uploadAvatar(event)">
+      <div class="profile-info" onclick="editField('name')"><h3 id="prof-name"></h3><p id="prof-phone"></p></div>
+    </div>
+    <div class="menu-list">
+      <div class="menu-item" onclick="openModal('orders')"><div class="menu-icon">📋</div><div class="menu-text" data-t="myOrders"></div><div class="menu-arrow">›</div></div>
+      <div class="menu-item" onclick="editField('address')"><div class="menu-icon">📍</div><div class="menu-text" data-t="addr"></div><div class="menu-arrow">›</div></div>
+    </div>
+    <div class="menu-list">
+      <div class="menu-item" onclick="toggleTheme()"><div class="menu-icon">🌙</div><div class="menu-text" data-t="theme"></div><label class="switch" onclick="event.stopPropagation()"><input type="checkbox" id="theme-switch" onchange="toggleTheme()"><span class="slider"></span></label></div>
+      <div class="menu-item" onclick="cycleLang()"><div class="menu-icon">🌐</div><div class="menu-text" data-t="langName"></div><div class="menu-arrow">›</div></div>
+    </div>
+    <div class="menu-list">
+      <div class="menu-item" onclick="openModal('support')"><div class="menu-icon">📞</div><div class="menu-text" data-t="support"></div><div class="menu-arrow">›</div></div>
+      <div class="menu-item" onclick="openModal('about')"><div class="menu-icon">ℹ️</div><div class="menu-text" data-t="about"></div><div class="menu-arrow">›</div></div>
+      <div class="menu-item" style="color:var(--danger)" onclick="clearData()"><div class="menu-icon" style="background:var(--danger-bg)">🗑️</div><div class="menu-text" data-t="clearData"></div></div>
+    </div>
+  </div>
+</main>
+
+<div id="cart-bar" onclick="go('cart')"></div>
+<button id="to-top" onclick="document.querySelector('main').scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<nav class="bottom-nav">
+  <div class="nav-item active" onclick="go('home')" data-page="home"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span data-t="home"></span></div>
+  <div class="nav-item" onclick="go('catalog')" data-page="catalog"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg><span data-t="cat"></span></div>
+  <div class="nav-item" onclick="go('favorites')" data-page="favorites"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg><span data-t="fav"></span></div>
+  <div class="nav-item" onclick="go('cart')" data-page="cart"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg><span data-t="cart"></span><span class="nav-badge" id="nav-badge">0</span></div>
+  <div class="nav-item" onclick="go('profile')" data-page="profile"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg><span data-t="profile"></span></div>
+</nav>
 </div>
 
-<!-- УВЕДОМЛЕНИЕ -->
-<div class="toast" id="toast">Текст</div>
+<div class="modal-overlay" id="custom-modal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-text" id="modal-text"></div>
+    <input type="text" class="modal-input" id="modal-input" style="display:none">
+    <div class="modal-actions">
+      <button class="modal-btn secondary" id="modal-cancel" onclick="closeModal()"></button>
+      <button class="modal-btn primary" id="modal-ok"></button>
+    </div>
+  </div>
+</div>
+<div id="welcome">
+  <div class="w-wrap">
+    <div class="w-top"><button class="lang-btn" id="w-lang" onclick="cycleLang()">TJ</button></div>
+    <div class="w-ico">👋</div>
+    <h1 data-t="welcome"></h1>
+    <p data-t="welcomeD"></p>
+    <div class="form-group"><label data-t="name"></label><input type="text" id="w-name" autocomplete="name"></div>
+    <div class="form-group"><label data-t="phone"></label><input type="tel" id="w-phone" placeholder="+992 __ ___ __ __" inputmode="tel" autocomplete="tel"></div>
+    <div class="form-group"><label data-t="address"></label><input type="text" id="w-addr" autocomplete="street-address"></div>
+    <div id="w-err"></div>
+    <button class="w-btn" onclick="submitWelcome()" data-t="cont"></button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
 
 <script>
-    /* ================= КОНСТАНТЫ И СЛОВАРИ ================= */
-    const CURRENCY = 'с.';
-    const LS = { lang:'jm_lang', cart:'jm_cart', favs:'jm_favs', theme:'jm_theme', profile:'jm_profile' };
-
-    const I18N = {
-        tg: {
-            search: 'Ҷустуҷӯи маҳсулот...',
-            banner1: 'Тахфифот то 30%', banner1d: 'Ба ҳамаи маҳсулоти тоза',
-            banner2: 'Интиқоли ройгон', banner2d: 'Барои фармоишҳо аз 200 с.',
-            cats: 'Категорияҳо', pop: 'Маҳсулоти машҳур', disc: 'Тахфифот', all: 'Ҳама',
-            cat: 'Каталог', found: 'мол', added: 'ба сабад илова шуд',
-            cart: 'Сабад', clear: 'Тоза кардан', cartEmpty: 'Сабад холӣ аст', cartEmptyDesc: 'Маҳсулотро аз каталог илова кунед', toCatalog: 'Ба каталог',
-            checkout: 'Бақайдгирии фармоиш', name: 'Номи шумо', phone: 'Телефон', address: 'Суроғаи интиқол',
-            items: 'Молҳо', delivery: 'Интиқол', free: 'Ройгон', total: 'Ҳамагӣ',
-            fav: 'Дӯстдошта', favEmpty: 'Дар дӯстдошта холӣ аст', favEmptyDesc: 'Маҳсулотро илова кунед, то гум накунед',
-            home: 'Асосӣ', profile: 'Профил', guest: 'Меҳмон', noPhone: 'Телефон нишон дода нашудааст',
-            theme: 'Мавзӯи торик', lang: 'Забон: Тоҷикӣ', clearData: 'Тоза кардани маълумот',
-            myOrders: 'Фармоишҳои ман', addressBook: 'Суроғаҳои интиқол', support: 'Хадамоти дастгирӣ', about: 'Дар бораи барнома',
-            desc: 'Тавсиф', comp: 'Таркиб', indic: 'Нишондодҳо', inStock: 'Дар анбор ҳаст',
-            orderMsg: 'Барои тасдиқи фармоиш ба менеджер нависед.',
-            editProfile: 'Тағйир додани маълумот', editName: 'Номи нав', editPhone: 'Телефони нав', editAddress: 'Суроғаи нав',
-            save: 'Сабт кардан', cancel: 'Бекор кардан', noOrders: 'Шумо ҳоло фармоиш надоред.', aboutText: 'JAIHUN MARKET - мағозаи интернетии маҳсулоти озуқаворӣ. Версияи 1.0.0'
-        },
-        ru: {
-            search: 'Поиск товаров...',
-            banner1: 'Скидки до 30%', banner1d: 'На все свежие продукты',
-            banner2: 'Бесплатная доставка', banner2d: 'При заказе от 200 с.',
-            cats: 'Категории', pop: 'Популярные товары', disc: 'Акции и скидки', all: 'Все',
-            cat: 'Каталог', found: 'товаров', added: 'добавлен в корзину',
-            cart: 'Корзина', clear: 'Очистить', cartEmpty: 'Корзина пуста', cartEmptyDesc: 'Добавьте товары из каталога', toCatalog: 'В каталог',
-            checkout: 'Оформление заказа', name: 'Ваше имя', phone: 'Телефон', address: 'Адрес доставки',
-            items: 'Товары', delivery: 'Доставка', free: 'Бесплатно', total: 'Итого',
-            fav: 'Избранное', favEmpty: 'В избранном пусто', favEmptyDesc: 'Добавляйте товары, чтобы не потерять их',
-            home: 'Главная', profile: 'Профиль', guest: 'Гость', noPhone: 'Телефон не указан',
-            theme: 'Темная тема', lang: 'Язык: Русский', clearData: 'Очистить данные',
-            myOrders: 'Мои заказы', addressBook: 'Адреса доставки', support: 'Служба поддержки', about: 'О приложении',
-            desc: 'Описание', comp: 'Состав', indic: 'Показания', inStock: 'В наличии',
-            orderMsg: 'Напишите менеджеру для подтверждения заказа.',
-            editProfile: 'Изменить данные', editName: 'Новое имя', editPhone: 'Новый телефон', editAddress: 'Новый адрес',
-            save: 'Сохранить', cancel: 'Отмена', noOrders: 'У вас пока нет заказов.', aboutText: 'JAIHUN MARKET - продуктовый интернет-магазин. Версия 1.0.0'
-        },
-        en: {
-            search: 'Search products...',
-            banner1: 'Up to 30% OFF', banner1d: 'On all fresh products',
-            banner2: 'Free Delivery', banner2d: 'On orders over 200 s.',
-            cats: 'Categories', pop: 'Popular Products', disc: 'Discounts', all: 'All',
-            cat: 'Catalog', found: 'items', added: 'added to cart',
-            cart: 'Cart', clear: 'Clear', cartEmpty: 'Cart is empty', cartEmptyDesc: 'Add products from catalog', toCatalog: 'To Catalog',
-            checkout: 'Checkout', name: 'Your Name', phone: 'Phone', address: 'Delivery Address',
-            items: 'Items', delivery: 'Delivery', free: 'Free', total: 'Total',
-            fav: 'Favorites', favEmpty: 'Favorites is empty', favEmptyDesc: 'Add products to save them',
-            home: 'Home', profile: 'Profile', guest: 'Guest', noPhone: 'Phone not specified',
-            theme: 'Dark Theme', lang: 'Language: English', clearData: 'Clear Data',
-            myOrders: 'My Orders', addressBook: 'Address Book', support: 'Support', about: 'About App',
-            desc: 'Description', comp: 'Composition', indic: 'Indications', inStock: 'In Stock',
-            orderMsg: 'Message the manager to confirm the order.',
-            editProfile: 'Edit Profile', editName: 'New Name', editPhone: 'New Phone', editAddress: 'New Address',
-            save: 'Save', cancel: 'Cancel', noOrders: 'You have no orders yet.', aboutText: 'JAIHUN MARKET - grocery online store. Version 1.0.0'
-        }
-    };
-
-    const CATS = [
-        { id:'all', emoji:'🛍️', tg:'Ҳама', ru:'Все', en:'All' },
-        { id:'b1', emoji:'🌾', tg:'Бакалея 1', ru:'Бакалея 1', en:'Grocery 1' },
-        { id:'b2', emoji:'🍯', tg:'Бакалея 2', ru:'Бакалея 2', en:'Grocery 2' },
-        { id:'g1', emoji:'🥩', tg:'Гастрономия 1', ru:'Гастрономия 1', en:'Deli 1' },
-        { id:'dr', emoji:'🥤', tg:'Нӯшокиҳо', ru:'Напитки', en:'Drinks' },
-        { id:'mk', emoji:'🥛', tg:'Ширӣ', ru:'Молочные', en:'Dairy' },
-        { id:'ov', emoji:'🍎', tg:'Сабзавот ва мева', ru:'Овощи и фрукты', en:'Fruits & Veg' },
-        { id:'sw', emoji:'🍫', tg:'Шириниҳо', ru:'Сладости', en:'Sweets' }
-    ];
-
-    const PRODUCTS = [
-        { id:'p1', cat:'b1', emoji:'🌾', img:'1.png', tg:'Орди олӣ', ru:'Мука высший сорт', en:'Premium flour', w:'2 кг', price:90, oldPrice:110, desc:'Орди гандуми дараҷаи олӣ барои нонпазӣ.', comp:'Гандуми нарм, витаминҳо.', indic:'Барои пухтани нон ва ширинӣ.' },
-        { id:'p2', cat:'b1', emoji:'🍚', img:'2.webp', tg:'Биринҷи ош', ru:'Рис для плова', en:'Rice for pilaf', w:'1 кг', price:125, oldPrice:0, desc:'Биринҷи сифатноки лазерӣ.', comp:'100% биринҷ.', indic:'Барои пухтани оши палав.' },
-        { id:'p3', cat:'b1', emoji:'🍝', img:'3.jpg', tg:'Макарон', ru:'Макароны', en:'Pasta', w:'450 г', price:80, oldPrice:0, desc:'Макарони хушк аз гандуми сахт.', comp:'Орди гандуми сахт, об.', indic:'Барои таомҳои гуногун.' },
-        { id:'p4', cat:'b1', emoji:'🍬', img:'4.jpg', tg:'Шакар', ru:'Сахар', en:'Sugar', w:'1 кг', price:70, oldPrice:0, desc:'Шакари тозаи кристаллӣ.', comp:'Сахароза.', indic:'Барои нӯшокиҳо ва ширинӣ.' },
-        { id:'p5', cat:'b1', emoji:'🍞', img:'https://images.unsplash.com/photo-1598373182133-52452f7691ef?auto=format&fit=crop&w=300&q=80', tg:'Нони гарм', ru:'Хлеб', en:'Bread', w:'1 дона', price:25, oldPrice:0, desc:'Нони тозаи рӯзона.', comp:'Орд, об, намак, хамиртуруш.', indic:'Барои сари дастархон.' },
-        { id:'p6', cat:'b2', emoji:'🌻', img:'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=300&q=80', tg:'Равғани офтобпараст', ru:'Масло подсолнечное', en:'Sunflower oil', w:'1 л', price:135, oldPrice:150, desc:'Равғани тозаи офтобпараст.', comp:'Равғани офтобпараст.', indic:'Барои пухтупаз.' },
-        { id:'p7', cat:'b2', emoji:'☕', img:'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?auto=format&fit=crop&w=300&q=80', tg:'Чойи сиёҳ', ru:'Чай чёрный', en:'Black tea', w:'100 халта', price:330, oldPrice:0, desc:'Чойи сиёҳи хушбӯй.', comp:'Барги чой.', indic:'Барои нӯшидан.' },
-        { id:'p11', cat:'mk', emoji:'🥛', img:'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=300&q=80', tg:'Шири 3.2%', ru:'Молоко 3.2%', en:'Milk 3.2%', w:'1 л', price:110, oldPrice:0, desc:'Шири табиии пурра.', comp:'Шир.', indic:'Барои нӯшидан ва пухтупаз.' },
-        { id:'p12', cat:'mk', emoji:'🥚', img:'https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&w=300&q=80', tg:'Тухм', ru:'Яйца', en:'Eggs', w:'10 дона', price:110, oldPrice:130, desc:'Тухми мурғи тоза.', comp:'Тухм.', indic:'Барои омлет ва нонпазӣ.' },
-        { id:'p15', cat:'ov', emoji:'🍅', img:'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=300&q=80', tg:'Помидор', ru:'Помидоры', en:'Tomatoes', w:'1 кг', price:150, oldPrice:0, desc:'Помидори тозаи боғӣ.', comp:'Помидор.', indic:'Барои салат.' },
-        { id:'p16', cat:'ov', emoji:'🍎', img:'https://images.unsplash.com/photo-1560806887-1e4cd0b6fac6?auto=format&fit=crop&w=300&q=80', tg:'Себ', ru:'Яблоки', en:'Apples', w:'1 кг', price:230, oldPrice:0, desc:'Себи ширин ва обдор.', comp:'Себ.', indic:'Барои истеъмол.' },
-        { id:'p17', cat:'sw', emoji:'🍫', img:'https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=300&q=80', tg:'Шоколад', ru:'Шоколад', en:'Chocolate', w:'90 г', price:90, oldPrice:0, desc:'Шоколади болаззат.', comp:'Какао, шакар, шир.', indic:'Барои нӯшокиҳо.' },
-        { id:'p18', cat:'sw', emoji:'🍪', img:'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=300&q=80', tg:'Печени', ru:'Печенье к чаю', en:'Cookies', w:'300 г', price:110, oldPrice:0, desc:'Печени хушк барои чой.', comp:'Орд, шакар, равған.', indic:'Барои чойнӯшӣ.' }
-    ];
-
-    /* ================= СОСТОЯНИЕ ================= */
-    let state = {
-        cart: JSON.parse(localStorage.getItem(LS.cart)) || {},
-        favorites: JSON.parse(localStorage.getItem(LS.favs)) || [],
-        theme: localStorage.getItem(LS.theme) || 'light',
-        lang: localStorage.getItem(LS.lang) || 'tg',
-        profile: JSON.parse(localStorage.getItem(LS.profile)) || { name: '', phone: '', address: '', avatar: '' },
-        currentPage: 'home',
-        currentCategory: 'all',
-        searchQuery: '',
-        editingField: null // Для модалки
-    };
-
-    /* ================= ИНИЦИАЛИЗАЦИЯ ================= */
-    document.addEventListener('DOMContentLoaded', () => {
-        initTheme();
-        applyLanguage();
-        renderProfile();
-        renderHomeCategories();
-        simulateLoading();
-        renderCatalogTabs();
-        renderCatalog();
-        updateCartUI();
-    });
-
-    function simulateLoading() {
-        document.getElementById('popular-products').innerHTML = `
-            <div class="product-card skeleton-card"></div>
-            <div class="product-card skeleton-card"></div>
-        `;
-        setTimeout(() => {
-            renderProducts('popular-products', PRODUCTS.slice(0, 4));
-            renderProducts('discount-products', PRODUCTS.filter(p => p.oldPrice > 0));
-        }, 600);
-    }
-
-    /* ================= ПРОФИЛЬ (НОВАЯ ЛОГИКА) ================= */
-    function renderProfile() {
-        const dict = I18N[state.lang];
-        const p = state.profile;
-
-        // Имя и телефон
-        document.getElementById('prof-name').textContent = p.name || dict.guest;
-        document.getElementById('prof-phone').textContent = p.phone || dict.noPhone;
-
-        // Аватар
-        const avatarImg = document.getElementById('avatar-img');
-        const avatarLetter = document.getElementById('avatar-letter');
-        
-        if (p.avatar) {
-            avatarImg.src = p.avatar;
-            avatarImg.style.display = 'block';
-            avatarLetter.style.display = 'none';
-        } else {
-            avatarImg.style.display = 'none';
-            avatarLetter.style.display = 'block';
-            avatarLetter.textContent = p.name ? p.name.charAt(0).toUpperCase() : 'J';
-        }
-
-        // Подстановка адреса в чекаут
-        const addrInput = document.getElementById('address-input');
-        if (addrInput && !addrInput.value) {
-            addrInput.value = p.address || '';
-        }
-    }
-
-    function uploadAvatar(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            state.profile.avatar = e.target.result; // Base64
-            saveProfile();
-            renderProfile();
-            showToast('✅ Расм нав карда шуд');
-        };
-        reader.readAsDataURL(file);
-    }
-
-    function editProfile() {
-        const dict = I18N[state.lang];
-        openModal('input', dict.editProfile, dict.editName, state.profile.name, 'name');
-    }
-
-    function editAddress() {
-        const dict = I18N[state.lang];
-        openModal('input', dict.addressBook, dict.editAddress, state.profile.address, 'address');
-    }
-
-    function saveProfile() {
-        localStorage.setItem(LS.profile, JSON.stringify(state.profile));
-    }
-
-    /* ================= МОДАЛЬНЫЕ ОКНА ================= */
-    let modalContext = { type: null, field: null };
-
-    function openModal(type, title = '', placeholder = '', value = '', field = null) {
-        const modal = document.getElementById('custom-modal');
-        const mTitle = document.getElementById('modal-title');
-        const mText = document.getElementById('modal-text');
-        const mInput = document.getElementById('modal-input');
-        const dict = I18N[state.lang];
-
-        modalContext = { type, field };
-
-        if (type === 'orders') {
-            mTitle.textContent = dict.myOrders;
-            mText.innerHTML = `<div style="text-align:center; padding: 20px 0; color: var(--text-muted);">${dict.noOrders}</div>`;
-            mInput.style.display = 'none';
-            document.getElementById('modal-save-btn').style.display = 'none';
-            document.querySelector('.modal-btn.secondary').style.display = 'block';
-        } 
-        else if (type === 'about') {
-            mTitle.textContent = dict.about;
-            mText.textContent = dict.aboutText;
-            mInput.style.display = 'none';
-            document.getElementById('modal-save-btn').style.display = 'none';
-            document.querySelector('.modal-btn.secondary').style.display = 'block';
-        }
-        else if (type === 'support') {
-            mTitle.textContent = dict.support;
-            mText.innerHTML = `<div style="font-size: 16px; font-weight: 700; color: var(--primary); margin: 20px 0;">+992 90 000 00 00</div>`;
-            mInput.style.display = 'none';
-            document.getElementById('modal-save-btn').textContent = 'Позвонить';
-            document.getElementById('modal-save-btn').onclick = () => { window.location.href = 'tel:+992900000000'; };
-            document.querySelector('.modal-btn.secondary').style.display = 'block';
-        }
-        else if (type === 'input') {
-            mTitle.textContent = title;
-            mText.textContent = '';
-            mInput.style.display = 'block';
-            mInput.placeholder = placeholder;
-            mInput.value = value || '';
-            document.getElementById('modal-save-btn').style.display = 'block';
-            document.getElementById('modal-save-btn').textContent = dict.save;
-            document.querySelector('.modal-btn.secondary').style.display = 'block';
-            document.querySelector('.modal-btn.secondary').textContent = dict.cancel;
-            
-            // Восстанавливаем функцию сохранения
-            document.getElementById('modal-save-btn').onclick = saveModal;
-            setTimeout(() => mInput.focus(), 100);
-        }
-
-        modal.classList.add('active');
-    }
-
-    function closeModal(e) {
-        if (e && e.target !== e.currentTarget) return;
-        document.getElementById('custom-modal').classList.remove('active');
-    }
-
-    function saveModal() {
-        if (modalContext.type === 'input') {
-            const val = document.getElementById('modal-input').value.trim();
-            if (modalContext.field === 'name') state.profile.name = val;
-            if (modalContext.field === 'address') state.profile.address = val;
-            
-            saveProfile();
-            renderProfile();
-            closeModal();
-            showToast('✅ Маълумот сабт шуд');
-        }
-    }
-
-    /* ================= ЯЗЫК ================= */
-    function applyLanguage() {
-        const dict = I18N[state.lang];
-        document.getElementById('lang-btn').textContent = state.lang.toUpperCase();
-        document.getElementById('search-input').placeholder = dict.search;
-        
-        // Главная
-        document.getElementById('banner-title').textContent = dict.banner1;
-        document.getElementById('banner-desc').textContent = dict.banner1d;
-        document.getElementById('banner-title2').textContent = dict.banner2;
-        document.getElementById('banner-desc2').textContent = dict.banner2d;
-        document.getElementById('home-cats-title').textContent = dict.cats;
-        document.getElementById('home-pop-title').textContent = dict.pop;
-        document.getElementById('home-pop-all').textContent = dict.all;
-        document.getElementById('home-disc-title').textContent = dict.disc;
-        document.getElementById('home-disc-all').textContent = dict.all;
-
-        // Корзина
-        document.getElementById('cart-title').textContent = dict.cart;
-        document.getElementById('cart-clear').textContent = dict.clear;
-        document.getElementById('cart-empty-title').textContent = dict.cartEmpty;
-        document.getElementById('cart-empty-desc').textContent = dict.cartEmptyDesc;
-        document.getElementById('cart-empty-btn').textContent = dict.toCatalog;
-        
-        // Чекаут
-        document.getElementById('checkout-title').textContent = dict.checkout;
-        document.getElementById('lbl-name').textContent = dict.name;
-        document.getElementById('lbl-phone').textContent = dict.phone;
-        document.getElementById('lbl-address').textContent = dict.address;
-        document.getElementById('lbl-items').textContent = dict.items;
-        document.getElementById('lbl-delivery').textContent = dict.delivery;
-        document.getElementById('summary-delivery').textContent = dict.free;
-        document.getElementById('lbl-total').textContent = dict.total;
-
-        // Избранное
-        document.getElementById('fav-title').textContent = dict.fav;
-        document.getElementById('fav-empty-title').textContent = dict.favEmpty;
-        document.getElementById('fav-empty-desc').textContent = dict.favEmptyDesc;
-        document.getElementById('fav-empty-btn').textContent = dict.toCatalog;
-
-        // Профиль
-        document.getElementById('prof-orders').textContent = dict.myOrders;
-        document.getElementById('prof-address').textContent = dict.addressBook;
-        document.getElementById('prof-theme').textContent = dict.theme;
-        document.getElementById('prof-lang').textContent = dict.lang;
-        document.getElementById('prof-support').textContent = dict.support;
-        document.getElementById('prof-about').textContent = dict.about;
-        document.getElementById('prof-clear').textContent = dict.clearData;
-
-        // Меню
-        document.getElementById('nav-home').textContent = dict.home;
-        document.getElementById('nav-catalog').textContent = dict.cat;
-        document.getElementById('nav-fav').textContent = dict.fav;
-        document.getElementById('nav-cart').textContent = dict.cart;
-        document.getElementById('nav-profile').textContent = dict.profile;
-
-        renderProfile();
-        renderHomeCategories();
-        renderCatalogTabs();
-        renderCatalog();
-        
-        if (state.currentPage === 'cart') renderCart();
-        if (state.currentPage === 'favorites') renderFavorites();
-    }
-
-    function cycleLang() {
-        const order = ['tg', 'ru', 'en'];
-        state.lang = order[(order.indexOf(state.lang) + 1) % order.length];
-        localStorage.setItem(LS.lang, state.lang);
-        applyLanguage();
-    }
-
-    /* ================= ТЕМА ================= */
-    function initTheme() {
-        document.documentElement.setAttribute('data-theme', state.theme);
-        const icon = document.getElementById('theme-icon');
-        const switchEl = document.getElementById('theme-switch');
-        
-        if (state.theme === 'dark') {
-            icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>`;
-            if (switchEl) switchEl.checked = true;
-        } else {
-            icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>`;
-            if (switchEl) switchEl.checked = false;
-        }
-    }
-
-    function toggleTheme() {
-        state.theme = state.theme === 'light' ? 'dark' : 'light';
-        localStorage.setItem(LS.theme, state.theme);
-        initTheme();
-    }
-
-    /* ================= НАВИГАЦИЯ ================= */
-    function navigateTo(pageId) {
-        state.currentPage = pageId;
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(`page-${pageId}`).classList.add('active');
-        
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        const navItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
-        if (navItem) navItem.classList.add('active');
-
-        if (pageId === 'cart') renderCart();
-        if (pageId === 'favorites') renderFavorites();
-        
-        document.querySelector('main').scrollTop = 0;
-    }
-
-    /* ================= РЕНДЕР (ОСТАЛЬНОЕ) ================= */
-    function renderHomeCategories() {
-        const container = document.getElementById('home-categories');
-        container.innerHTML = CATS.filter(c => c.id !== 'all').map(cat => `
-            <div class="category-item" onclick="filterByCategory('${cat.id}')">
-                <div class="category-icon">${cat.emoji}</div>
-                <span>${cat[state.lang]}</span>
-            </div>
-        `).join('');
-    }
-
-    function renderProducts(containerId, items) {
-        const container = document.getElementById(containerId);
-        if (!items.length) {
-            container.innerHTML = `<div style="grid-column: span 2; text-align: center; color: var(--text-muted); padding: 20px; font-weight:600;">${I18N[state.lang].cartEmpty}</div>`;
-            return;
-        }
-
-        container.innerHTML = items.map(p => {
-            const fav = state.favorites.includes(p.id);
-            const hasOld = p.oldPrice > 0;
-            const imgHTML = p.img 
-                ? `<img src="${p.img}" class="product-img" alt="${p[state.lang]}" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'product-img emoji\\'>${p.emoji}</span>'">`
-                : `<span class="product-img emoji">${p.emoji}</span>`;
-
-            return `
-            <div class="product-card" onclick="openProduct('${p.id}')">
-                ${hasOld ? `<div class="discount-badge" style="position:absolute;top:8px;left:8px;background:var(--danger);color:white;font-size:10px;font-weight:bold;padding:2px 6px;border-radius:4px;z-index:2;">-${Math.round((1 - p.price/p.oldPrice)*100)}%</div>` : ''}
-                <button class="fav-btn ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${p.id}', this)">
-                    <svg fill="${fav ? 'currentColor' : 'none'}" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                </button>
-                <div class="product-img-container">
-                    ${imgHTML}
-                </div>
-                <div class="product-price">
-                    ${p.price} ${CURRENCY}
-                    ${hasOld ? `<span style="font-size:12px;text-decoration:line-through;color:var(--text-muted);margin-left:4px;font-weight:600;">${p.oldPrice} ${CURRENCY}</span>` : ''}
-                </div>
-                <div class="product-name">${p[state.lang]}</div>
-                <div class="product-dosage">${p.w}</div>
-                <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('${p.id}')">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                    ${I18N[state.lang].cart}
-                </button>
-            </div>
-        `}).join('');
-    }
-
-    function renderCatalogTabs() {
-        const container = document.getElementById('catalog-tabs');
-        container.innerHTML = CATS.map(cat => `
-            <button class="tab-btn ${state.currentCategory === cat.id ? 'active' : ''}" onclick="filterByCategory('${cat.id}')">${cat[state.lang]}</button>
-        `).join('');
-    }
-
-    function filterByCategory(catId) {
-        state.currentCategory = catId;
-        renderCatalogTabs();
-        renderCatalog();
-        if (state.currentPage !== 'catalog') navigateTo('catalog');
-    }
-
-    function renderCatalog() {
-        let filtered = PRODUCTS;
-        if (state.currentCategory !== 'all') {
-            filtered = filtered.filter(p => p.cat === state.currentCategory);
-        }
-        if (state.searchQuery) {
-            const q = state.searchQuery.toLowerCase();
-            filtered = filtered.filter(p => p[state.lang].toLowerCase().includes(q));
-        }
-        
-        document.getElementById('catalog-count').textContent = `${filtered.length} ${I18N[state.lang].found}`;
-        renderProducts('catalog-products', filtered);
-    }
-
-    function handleSearch(query) {
-        state.searchQuery = query;
-        if (state.currentPage !== 'catalog') navigateTo('catalog');
-        renderCatalog();
-    }
-
-    /* ================= ДЕТАЛИ ТОВАРА ================= */
-    function openProduct(id) {
-        const p = PRODUCTS.find(prod => prod.id === id);
-        if (!p) return;
-
-        const dict = I18N[state.lang];
-        const imgHTML = p.img 
-            ? `<img src="${p.img}" class="product-detail-img" alt="${p[state.lang]}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'product-detail-img emoji\\'>${p.emoji}</div>'">`
-            : `<div class="product-detail-img emoji">${p.emoji}</div>`;
-
-        document.getElementById('product-detail-content').innerHTML = `
-            ${imgHTML}
-            <div class="detail-title">${p[state.lang]}</div>
-            <div class="detail-manufacturer">${p.w}</div>
-            
-            <div class="detail-price-row">
-                <div class="detail-price">${p.price} ${CURRENCY}</div>
-                ${p.oldPrice ? `<div class="detail-old-price" style="font-size:16px;text-decoration:line-through;color:var(--text-muted);font-weight:600;">${p.oldPrice} ${CURRENCY}</div>` : ''}
-            </div>
-
-            <div class="stock-info">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                ${dict.inStock}
-            </div>
-
-            <div class="detail-actions">
-                <button class="add-to-cart-btn" onclick="addToCart('${p.id}')">${dict.cart}</button>
-            </div>
-
-            <div class="accordion-item active">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    ${dict.desc}
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
-                <div class="accordion-content">${p.desc}</div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    ${dict.comp}
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
-                <div class="accordion-content">${p.comp}</div>
-            </div>
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    ${dict.indic}
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </div>
-                <div class="accordion-content">${p.indic}</div>
-            </div>
-        `;
-        navigateTo('product');
-    }
-
-    function toggleAccordion(header) {
-        header.parentElement.classList.toggle('active');
-    }
-
-    /* ================= КОРЗИНА ================= */
-    function addToCart(id) {
-        state.cart[id] = (state.cart[id] || 0) + 1;
-        saveCart();
-        updateCartUI();
-        showToast(`✅ ${PRODUCTS.find(p => p.id === id)[state.lang]} ${I18N[state.lang].added}`);
-    }
-
-    function removeFromCart(id) {
-        delete state.cart[id];
-        saveCart();
-        updateCartUI();
-        renderCart();
-    }
-
-    function updateQty(id, delta) {
-        const next = (state.cart[id] || 0) + delta;
-        if (next <= 0) {
-            removeFromCart(id);
-        } else {
-            state.cart[id] = next;
-            saveCart();
-            updateCartUI();
-            renderCart();
-        }
-    }
-
-    function saveCart() {
-        localStorage.setItem(LS.cart, JSON.stringify(state.cart));
-    }
-
-    function updateCartUI() {
-        const count = Object.values(state.cart).reduce((a, b) => a + b, 0);
-        const badge1 = document.getElementById('cart-badge');
-        const badge2 = document.getElementById('nav-cart-badge');
-        
-        if (count > 0) {
-            badge1.style.display = 'flex';
-            badge1.textContent = count;
-            badge2.style.display = 'flex';
-            badge2.textContent = count;
-        } else {
-            badge1.style.display = 'none';
-            badge2.style.display = 'none';
-        }
-    }
-
-    function renderCart() {
-        const container = document.getElementById('cart-items');
-        const emptyState = document.getElementById('cart-empty');
-        const checkoutSection = document.getElementById('checkout-section');
-        const dict = I18N[state.lang];
-
-        const ids = Object.keys(state.cart);
-
-        if (ids.length === 0) {
-            container.innerHTML = '';
-            emptyState.classList.remove('hidden');
-            checkoutSection.classList.add('hidden');
-            return;
-        }
-
-        emptyState.classList.add('hidden');
-        checkoutSection.classList.remove('hidden');
-
-        let subtotal = 0;
-        let totalItems = 0;
-
-        container.innerHTML = ids.map(id => {
-            const p = PRODUCTS.find(prod => prod.id === id);
-            if (!p) return '';
-            const qty = state.cart[id];
-            subtotal += p.price * qty;
-            totalItems += qty;
-
-            const imgHTML = p.img 
-                ? `<img src="${p.img}" class="cart-item-img" alt="${p[state.lang]}" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'cart-item-img emoji\\'>${p.emoji}</div>'">`
-                : `<div class="cart-item-img emoji">${p.emoji}</div>`;
-
-            return `
-                <div class="cart-item">
-                    ${imgHTML}
-                    <div class="cart-item-info">
-                        <div class="cart-item-title">${p[state.lang]}</div>
-                        <div class="cart-item-price">${p.price} ${CURRENCY}</div>
-                        <div class="cart-item-actions">
-                            <div class="qty-control">
-                                <button class="qty-btn" onclick="updateQty('${p.id}', -1)">-</button>
-                                <span class="qty-val">${qty}</span>
-                                <button class="qty-btn" onclick="updateQty('${p.id}', 1)">+</button>
-                            </div>
-                            <button class="remove-btn" onclick="removeFromCart('${p.id}')">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-        document.getElementById('summary-subtotal').textContent = `${subtotal} ${CURRENCY}`;
-        document.getElementById('summary-total').textContent = `${subtotal} ${CURRENCY}`;
-    }
-
-    function clearCart() {
-        state.cart = {};
-        saveCart();
-        updateCartUI();
-        renderCart();
-    }
-
-    /* ================= ИЗБРАННОЕ ================= */
-    function toggleFavorite(id, btn) {
-        const index = state.favorites.indexOf(id);
-        if (index > -1) {
-            state.favorites.splice(index, 1);
-            if(btn) {
-                btn.classList.remove('active');
-                btn.querySelector('svg').setAttribute('fill', 'none');
-            }
-        } else {
-            state.favorites.push(id);
-            if(btn) {
-                btn.classList.add('active');
-                btn.querySelector('svg').setAttribute('fill', 'currentColor');
-            }
-        }
-        localStorage.setItem(LS.favs, JSON.stringify(state.favorites));
-        if (state.currentPage === 'favorites') renderFavorites();
-    }
-
-    function renderFavorites() {
-        const container = document.getElementById('favorites-list');
-        const emptyState = document.getElementById('favorites-empty');
-
-        if (state.favorites.length === 0) {
-            container.innerHTML = '';
-            emptyState.classList.remove('hidden');
-            return;
-        }
-
-        emptyState.classList.add('hidden');
-        const favProducts = PRODUCTS.filter(p => state.favorites.includes(p.id));
-        renderProducts('favorites-list', favProducts);
-    }
-
-    /* ================= ОФОРМЛЕНИЕ ЗАКАЗА ================= */
-    function checkout(method) {
-        const name = document.getElementById('name-input').value.trim();
-        const phone = document.getElementById('phone-input').value.trim();
-        const address = document.getElementById('address-input').value.trim();
-
-        if (!phone) {
-            showToast('📞 ' + I18N[state.lang].phone);
-            return;
-        }
-
-        let orderText = `🛒 *Супориши нав аз JAIHUN MARKET!*\n\n`;
-        if(name) orderText += `👤 Ном: ${name}\n`;
-        if(phone) orderText += `📞 Телефон: ${phone}\n`;
-        if(address) orderText += `📍 Суроға: ${address}\n\n`;
-        
-        orderText += `📦 *Таркиби фармоиш:*\n`;
-
-        let total = 0;
-        Object.entries(state.cart).forEach(([id, qty]) => {
-            const p = PRODUCTS.find(prod => prod.id === id);
-            if(p) {
-                orderText += `- ${p[state.lang]} (${qty} шт) = ${p.price * qty} ${CURRENCY}\n`;
-                total += p.price * qty;
-            }
-        });
-
-        orderText += `\n💰 *Ҳамагӣ: ${total} ${CURRENCY}*`;
-        orderText += `\n\n_${I18N[state.lang].orderMsg}_`;
-
-        const encoded = encodeURIComponent(orderText);
-        const waPhone = '992900000000'; // Замените на свой номер
-
-        if (method === 'wa') {
-            window.open(`https://wa.me/${waPhone}?text=${encoded}`, '_blank');
-        } else if (method === 'tg') {
-            window.open(`https://t.me/share/url?url=${encodeURIComponent('Заказ JAIHUN MARKET')}&text=${encoded}`, '_blank');
-        }
-    }
-
-    function clearData() {
-        if(!confirm('Тоза кардани ҳамаи маълумот?')) return;
-        localStorage.clear();
-        location.reload();
-    }
-
-    /* ================= TOAST ================= */
-    function showToast(msg) {
-        const toast = document.getElementById('toast');
-        toast.textContent = msg;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2500);
-    }
+const CUR='с.',FREE=200,FEE=15,WA_PHONE='992971220800',SUPPORT='+992971220800';
+const LS={lang:'jm_lang',cart:'jm_cart',favs:'jm_favs',theme:'jm_theme',profile:'jm_profile',orders:'jm_orders',recent:'jm_recent',onb:'jm_onb'};
+const START=Date.now();
+
+/* ====== БАННЕРЫ: меняйте картинки и тексты здесь ======
+   img  — имя файла рядом с index.html (banner1.jpg) или ссылка https://...
+          Размер: 1200×430 px (формат ~2.8:1), JPG/WebP до 200 КБ.
+   title/text — заголовок и подпись на трёх языках (пустая строка '' = без текста).
+   link — куда вести по нажатию: 'catalog', id категории (b1,b2,g1,mk,sw,ch) или '' (никуда).
+   Хотите ещё баннер — скопируйте блок {...} и добавьте через запятую. */
+const BANNERS=[
+ {img:'banner1.jpg',link:'catalog',
+  title:{tg:'Тахфифот то 30%',ru:'Скидки до 30%',en:'Up to 30% OFF'},
+  text:{tg:'Ба ҳамаи маҳсулоти тоза',ru:'На все свежие продукты',en:'On all fresh products'}},
+ {img:'banner2.jpg',link:'sw',
+  title:{tg:'Интиқоли ройгон',ru:'Бесплатная доставка',en:'Free Delivery'},
+  text:{tg:'Барои фармоишҳо аз 200 с.',ru:'При заказе от 200 с.',en:'On orders over 200 s.'}}
+];
+const $=id=>document.getElementById(id);
+const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+const save=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+
+const I18N={
+tg:{search:'Ҷустуҷӯи маҳсулот...',b1:'Тахфифот то 30%',b1d:'Ба ҳамаи маҳсулоти тоза',b2:'Интиқоли ройгон',b2d:'Барои фармоишҳо аз 200 с.',cats:'Категорияҳо',pop:'Маҳсулоти машҳур',disc:'Тахфифот',all:'Ҳама',cat:'Каталог',found:'мол',added:'ба сабад илова шуд',cart:'Сабад',clear:'Тоза кардан',cartEmpty:'Сабад холӣ аст',cartEmptyD:'Маҳсулотро аз каталог илова кунед',toCat:'Ба каталог',checkout:'Бақайдгирии фармоиш',name:'Номи шумо',phone:'Телефон',address:'Суроғаи интиқол',items:'Молҳо',delivery:'Интиқол',free:'Ройгон',total:'Ҳамагӣ',fav:'Дӯстдошта',favEmpty:'Дар дӯстдошта холӣ аст',favEmptyD:'Маҳсулотро илова кунед, то гум накунед',home:'Асосӣ',profile:'Профил',guest:'Меҳмон',noPhone:'Телефон нишон дода нашудааст',theme:'Мавзӯи торик',langName:'Забон: Тоҷикӣ',clearData:'Тоза кардани маълумот',myOrders:'Фармоишҳои ман',addr:'Суроғаҳои интиқол',support:'Хадамоти дастгирӣ',about:'Дар бораи барнома',inStock:'Дар анбор ҳаст',orderMsg:'Барои тасдиқи фармоиш ба менеҷер нависед.',newName:'Номи нав',newAddr:'Суроғаи нав',save:'Сабт кардан',cancel:'Бекор кардан',noOrders:'Шумо ҳоло фармоиш надоред.',aboutText:'JAIHUN MARKET - мағозаи интернетии маҳсулоти озуқаворӣ. Версияи 2.0',call:'Занг задан',sortDef:'Одатӣ',asc:'Арзонтар',desc:'Гаронтар',az:'Аз рӯи ном',similar:'Маҳсулоти монанд',recent:'Дидаед',none:'Чизе ёфт нашуд',left:'То интиқоли ройгон: {n}',freeOk:'Интиқол ройгон аст!',badPhone:'Рақами телефонро ворид кунед',sent:'Фармоиш фиристода шуд',copied:'Истинод нусха шуд',saved:'Сабт шуд',confirm:'Тоза кардани ҳамаи маълумот?',pcs:'дона',about2:'Дар бораи маҳсулот',welcome:'Хуш омадед!',welcomeD:'Барои интиқоли зуд маълумоти худро ворид кунед. Онро як бор пур мекунед.',cont:'Идома додан',reqName:'Номро ворид кунед',reqAddr:'Суроғаро ворид кунед'},
+ru:{search:'Поиск товаров...',b1:'Скидки до 30%',b1d:'На все свежие продукты',b2:'Бесплатная доставка',b2d:'При заказе от 200 с.',cats:'Категории',pop:'Популярные товары',disc:'Акции и скидки',all:'Все',cat:'Каталог',found:'товаров',added:'добавлен в корзину',cart:'Корзина',clear:'Очистить',cartEmpty:'Корзина пуста',cartEmptyD:'Добавьте товары из каталога',toCat:'В каталог',checkout:'Оформление заказа',name:'Ваше имя',phone:'Телефон',address:'Адрес доставки',items:'Товары',delivery:'Доставка',free:'Бесплатно',total:'Итого',fav:'Избранное',favEmpty:'В избранном пусто',favEmptyD:'Добавляйте товары, чтобы не потерять их',home:'Главная',profile:'Профиль',guest:'Гость',noPhone:'Телефон не указан',theme:'Тёмная тема',langName:'Язык: Русский',clearData:'Очистить данные',myOrders:'Мои заказы',addr:'Адрес доставки',support:'Служба поддержки',about:'О приложении',inStock:'В наличии',orderMsg:'Напишите менеджеру для подтверждения заказа.',newName:'Новое имя',newAddr:'Новый адрес',save:'Сохранить',cancel:'Отмена',noOrders:'У вас пока нет заказов.',aboutText:'JAIHUN MARKET - продуктовый интернет-магазин. Версия 2.0',call:'Позвонить',sortDef:'По умолчанию',asc:'Дешевле',desc:'Дороже',az:'По названию',similar:'Похожие товары',recent:'Вы смотрели',none:'Ничего не найдено',left:'До бесплатной доставки: {n}',freeOk:'Доставка бесплатная!',badPhone:'Введите номер телефона',sent:'Заказ отправлен',copied:'Ссылка скопирована',saved:'Сохранено',confirm:'Очистить все данные?',pcs:'шт',about2:'О товаре',welcome:'Добро пожаловать!',welcomeD:'Укажите свои данные для быстрой доставки. Это нужно сделать один раз.',cont:'Продолжить',reqName:'Введите имя',reqAddr:'Введите адрес доставки'},
+en:{search:'Search products...',b1:'Up to 30% OFF',b1d:'On all fresh products',b2:'Free Delivery',b2d:'On orders over 200 s.',cats:'Categories',pop:'Popular Products',disc:'Discounts',all:'All',cat:'Catalog',found:'items',added:'added to cart',cart:'Cart',clear:'Clear',cartEmpty:'Cart is empty',cartEmptyD:'Add products from catalog',toCat:'To Catalog',checkout:'Checkout',name:'Your Name',phone:'Phone',address:'Delivery Address',items:'Items',delivery:'Delivery',free:'Free',total:'Total',fav:'Favorites',favEmpty:'Favorites is empty',favEmptyD:'Add products to save them',home:'Home',profile:'Profile',guest:'Guest',noPhone:'Phone not specified',theme:'Dark Theme',langName:'Language: English',clearData:'Clear Data',myOrders:'My Orders',addr:'Delivery Address',support:'Support',about:'About App',inStock:'In Stock',orderMsg:'Message the manager to confirm the order.',newName:'New Name',newAddr:'New Address',save:'Save',cancel:'Cancel',noOrders:'You have no orders yet.',aboutText:'JAIHUN MARKET - grocery online store. Version 2.0',call:'Call',sortDef:'Default',asc:'Cheapest',desc:'Most expensive',az:'By name',similar:'Similar products',recent:'Recently viewed',none:'Nothing found',left:'Free delivery in: {n}',freeOk:'Delivery is free!',badPhone:'Enter your phone number',sent:'Order sent',copied:'Link copied',saved:'Saved',confirm:'Clear all data?',pcs:'pcs',about2:'About product',welcome:'Welcome!',welcomeD:'Enter your details for fast delivery. You only need to do this once.',cont:'Continue',reqName:'Enter your name',reqAddr:'Enter your delivery address'}
+};
+const CATS=[
+{id:'all',emoji:'🛍️',tg:'Ҳама',ru:'Все',en:'All'},
+{id:'b1',emoji:'🌾',tg:'Бакалея 1',ru:'Бакалея 1',en:'Grocery 1'},
+{id:'b2',emoji:'🛢️',tg:'Равған ва Соусҳо',ru:'Масла и Соусы',en:'Oils & Sauces'},
+{id:'g1',emoji:'🥫',tg:'Гастрономия',ru:'Гастрономия',en:'Deli'},
+{id:'mk',emoji:'🥛',tg:'Ширӣ',ru:'Молочные',en:'Dairy'},
+{id:'sw',emoji:'🍫',tg:'Шириниҳо',ru:'Сладости',en:'Sweets'},
+{id:'ch',emoji:'🧴',tg:'Химияи маишӣ',ru:'Бытовая химия',en:'Household'}];
+
+const IM={oil:'1474979266404-7eaacbcd87c5',oil2:'1620706857370-e1b9770e8bb1',mayo:'1577906096429-f73c2c312435',tom:'1601312378427-8226e2df9383',gel:'1610557892470-55d9e80c0bce',soap:'1600857544200-b2f666a9a2ec',nap:'1584305574647-0cc9ebec5f8a',milk:'1550583724-b2692b85b150',pasta:'1551462147-37885acc36f1',yog:'1488477181946-6428a0291777',cook:'1499636136210-6f4ee915583e',tea:'1594631252845-29fc4cc8cde9',cof:'1559525839-b184a4d698c7',salt:'1626197031507-c17099753214',spice:'1596040033229-a9821ebd058d',paste:'1582284540020-8acbe03f4924',cream:'1563805042-7684c019e1cb',fairy:'1585671963253-1e1c4e0b3c9a',candy:'1582058091505-f87a2e55a40f',choc:'1511381939415-e44015466834',chips:'1566478989037-eec170784d0b',peas:'1592924357228-91a4daadcfea'};
+const img=k=>k?`https://images.unsplash.com/photo-${IM[k]}?auto=format&fit=crop&w=300&q=80`:'';
+
+// [категория, emoji, фото, tg, ru, en, вес, цена, старая цена (демо-скидка)]
+const RAW=[
+['b2','🛢️','oil','Равғани Золотая корона 10л','Масло Золотая корона 10л','Golden Crown Oil 10L','10 л',170,190],
+['b2','🛢️','oil2','Равғани Золотая корона 5л','Масло Золотая корона 5л','Golden Crown Oil 5L','5 л',80],
+['b2','🌻','oil2','Равғани семечка 1л','Масло семечка 1л','Sunflower Oil 1L','1 л',33],
+['g1','🥫','mayo','Майнез 1','Майонез 1','Mayonnaise 1','1 дона',33,38],
+['g1','🥫','mayo','Майнез 2','Майонез 2','Mayonnaise 2','1 дона',33],
+['b2','🍅','tom','Хазар тостени 1','Хазар тостени 1','Khazar Toast 1','1 дона',37],
+['b2','🍅','tom','Хазар тостени 2','Хазар тостени 2','Khazar Toast 2','1 дона',30],
+['ch','🧴','gel','Гели шустушӯи Весна 2л','Гель для стирки Весна 2л','Vesna Laundry Gel 2L','2 л',33],
+['ch','🧴','gel','Гели шустушӯи Эконом 3л','Гель для стир. Эконом 3л','Economy Laundry Gel 3L','3 л',45],
+['ch','🧼','soap','Собуни Завка','Мыло Завка','Zavka Soap','1 дона',6],
+['ch','🧺','gel','Парашок Галенуи 3кг','Порошок Галенуи 3кг','Galenui Powder 3kg','3 кг',55],
+['ch','🧺','gel','Парашок Айна 450г','Порошок Айна 450г','Aina Powder 450g','450 г',12],
+['ch','🧻','nap','Салфетка 130шт','Салфетки 130шт','Napkins 130pcs','130 шт',10],
+['b1','🥛','milk','Сгушенка 380г 8,5%','Сгущенка 380г 8,5%','Condensed Milk 380g','380 г',10],
+['b1','🍝','pasta','Макарон Макбул 1кг','Макароны Макбул 1кг','Makbul Pasta 1kg','1 кг',12],
+['b1','🍝','pasta','Макарон Добродея 400г','Макароны Добродея 400г','Dobrodeya Pasta 400g','400 г',10],
+['b1','🍬','','Набот','Набот (Сахар)','Rock Sugar','1 кг',15],
+['mk','🥛','yog','Ёгурт 95г','Йогурт 95г','Yogurt 95g','95 г',4],
+['sw','🍪','cook','Печен Зарпанд','Печенье Зарпанд','Zarpand Cookies','1 кг',40,46],
+['sw','🍪','cook','Печен Стела 100г','Печенье Стела 100г','Stella Cookies 100g','100 г',10],
+['b2','🍅','tom','Кетчуп Остриц','Кетчуп Остриц','Ostrich Ketchup','1 дона',10],
+['g1','🍵','tea','Чой Кок 200г','Чай Кок 200г','Kok Tea 200g','200 г',10],
+['g1','☕','cof','Кофе Жокей','Кофе Жокей','Jockey Coffee','1 дона',30],
+['b1','🧂','salt','Намак','Соль','Salt','1 кг',5],
+['b1','🧂','salt','Намаки Росток 90г','Соль Росток 90г','Rostok Salt 90g','90 г',5],
+['b1','🥘','spice','Приправа барои палав 150г','Приправа для плова 150г','Pilaf Spices 150g','150 г',10],
+['b2','🥫','paste','Томатни паста Plurha','Томатная паста Plurha','Plurha Tomato Paste','1 дона',22],
+['sw','🍦','cream','Крем Шефдукат 1литр','Крем Шефдукат 1л','Chefducat Cream 1L','1 л',40],
+['ch','🧴','fairy','Фери Рамил 1кг','Фейри Рамил 1кг','Fairy Ramiel 1kg','1 кг',18],
+['sw','🍪','cook','Печен Лайко 2кг','Печенье Лайко 2кг','Laiko Cookies 2kg','2 кг',40],
+['sw','🍬','candy','Понда 1кг','Понда 1кг','Ponda Candy 1kg','1 кг',55,62],
+['sw','🍬','candy','Уско 2кг','Уско 2кг','Usko Candy 2kg','2 кг',25],
+['sw','🍫','choc','Шакалод Френси','Шоколад Френси','Frenzy Chocolate','1 дона',50],
+['sw','🍫','choc','Шакалод Кракант','Шоколад Кракант','Cracant Chocolate','1 дона',55],
+['ch','🧺','gel','Степ','Степ (Порошок)','Step Powder','1 дона',65],
+['sw','🍫','choc','Каровка','Коровка','Korovka','1 дона',35],
+['sw','🍫','choc','Шакалод Долар','Шоколад Доллар','Dollar Chocolate','1 дона',50],
+['sw','🥔','chips','Чипа','Чипсы','Chips','1 дона',15],
+['b1','🫛','peas','Гарошек','Горошек','Peas','1 дона',15],
+['b1','🌽','peas','Кукуруз','Кукуруза','Corn','1 дона',15],
+['ch','🧼','soap','Собуни Раял','Мыло Раял','Royal Soap','1 дона',8],
+['ch','🧼','soap','Собуни Крис','Мыло Крис','Chris Soap','1 дона',8],
+['ch','🧼','','Собуни Дуру','Мыло Дуру','Duru Soap','1 дона',10],
+['ch','🧴','fairy','Фери Хот Пус Автомат','Фейри Хот Плюс Автомат','Fairy Hot Plus Auto','1 дона',20],
+['ch','🧴','fairy','Фери Аве','Фейри Аве','Fairy Ave','1 дона',18],
+['ch','🧴','','Фери Файз','Фейри Файз','Fairy Faiz','1 дона',20]];
+const PRODUCTS=RAW.map((r,i)=>({id:'p'+(i+1),cat:r[0],emoji:r[1],img:img(r[2]),tg:r[3],ru:r[4],en:r[5],w:r[6],price:r[7],old:r[8]||0}));
+const byId=id=>PRODUCTS.find(p=>p.id===id);
+
+let state={cart:load(LS.cart,{}),favs:load(LS.favs,[]),theme:localStorage.getItem(LS.theme)||'light',lang:localStorage.getItem(LS.lang)||'tg',profile:load(LS.profile,{name:'',phone:'',address:'',avatar:''}),page:'home',cat:'all',q:''};
+let sortBy='def',fromPop=false;
+const D=()=>I18N[state.lang];
+const t=k=>D()[k]||k;
+const count=()=>Object.values(state.cart).reduce((a,b)=>a+b,0);
+const subtotal=()=>Object.entries(state.cart).reduce((s,[id,q])=>{const p=byId(id);return s+(p?p.price*q:0)},0);
+const fee=s=>s>=FREE?0:FEE;
+
+/* ---------- init ---------- */
+document.addEventListener('DOMContentLoaded',()=>{
+  history.replaceState({p:'home'},'');
+  document.documentElement.setAttribute('data-theme',state.theme);
+  $('theme-switch').checked=state.theme==='dark';$('theme-btn').textContent=state.theme==='dark'?'☀️':'🌙';
+  $('phone-input').addEventListener('input',maskPhone);
+  $('w-phone').addEventListener('input',maskPhone);
+  ['w-name','w-phone','w-addr'].forEach(i=>$(i).addEventListener('keydown',e=>{if(e.key==='Enter')submitWelcome()}));
+  document.querySelector('main').addEventListener('scroll',e=>{$('to-top').style.display=e.target.scrollTop>400?'block':'none'});
+  window.addEventListener('popstate',e=>{fromPop=true;go((e.state&&e.state.p)||'home');fromPop=false});
+  applyLang();
+  initBannerSlider();
+  $('popular-products').innerHTML='<div class="skeleton"></div><div class="skeleton"></div>';
+  setTimeout(renderHome,500);
+  if(state.profile.phone)localStorage.setItem(LS.onb,'1');
+  setTimeout(()=>{
+    const sp=$('splash');sp.classList.add('hide');setTimeout(()=>sp.remove(),600);
+    if(!localStorage.getItem(LS.onb)){$('welcome').classList.add('show');setTimeout(()=>$('w-name').focus(),400)}
+  },Math.max(0,1800-(Date.now()-START)));
+});
+
+function submitWelcome(){
+  const n=$('w-name').value.trim(),p=$('w-phone').value.trim(),a=$('w-addr').value.trim(),e=$('w-err');
+  const bad=m=>{e.textContent=m};
+  if(n.length<2)return bad(t('reqName'));
+  if(p.replace(/\D/g,'').length<12)return bad(t('badPhone'));
+  if(a.length<3)return bad(t('reqAddr'));
+  Object.assign(state.profile,{name:n,phone:p,address:a});
+  save(LS.profile,state.profile);localStorage.setItem(LS.onb,'1');
+  renderProfile();$('welcome').classList.remove('show');
+  toast('✅ '+t('saved'));
+}
+
+/* ---------- язык ---------- */
+function applyLang(){
+  const d=D();
+  document.querySelectorAll('[data-t]').forEach(e=>e.textContent=d[e.dataset.t]);
+  document.querySelectorAll('[data-p]').forEach(e=>e.placeholder=d[e.dataset.p]);
+  $('lang-btn').textContent=$('w-lang').textContent=state.lang.toUpperCase();
+  $('w-name').placeholder=d.name;$('w-addr').placeholder=d.address;
+  $('name-input').placeholder=d.name;$('address-input').placeholder=d.address;
+  $('sort-sel').innerHTML=['sortDef','asc','desc','az'].map((k,i)=>{const v=['def','asc','desc','az'][i];return `<option value="${v}" ${sortBy===v?'selected':''}>${d[k]}</option>`}).join('');
+  renderProfile();renderBanners();renderCats();renderCatalog();renderHome();updateCartUI();
+  if(state.page==='cart')renderCart();
+  if(state.page==='favorites')renderFavs();
+}
+function cycleLang(){const o=['tg','ru','en'];state.lang=o[(o.indexOf(state.lang)+1)%3];localStorage.setItem(LS.lang,state.lang);applyLang()}
+function toggleTheme(){state.theme=state.theme==='light'?'dark':'light';localStorage.setItem(LS.theme,state.theme);document.documentElement.setAttribute('data-theme',state.theme);$('theme-switch').checked=state.theme==='dark';$('theme-btn').textContent=state.theme==='dark'?'☀️':'🌙'}
+
+/* ---------- навигация ---------- */
+function go(p){
+  state.page=p;
+  document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));
+  $('page-'+p).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===p));
+  if(p==='cart')renderCart();
+  if(p==='favorites')renderFavs();
+  if(p==='home')renderRecent();
+  document.querySelector('main').scrollTop=0;
+  renderBar();
+  if(!fromPop&&!(history.state&&history.state.p===p))history.pushState({p},'');
+}
+
+/* ---------- карточки ---------- */
+const HEART='<svg fill="FILL" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>';
+const imgTag=(p,cls)=>p.img?`<img src="${p.img}" class="${cls}" loading="lazy" alt="" onerror="this.outerHTML='<div class=\\'${cls} emoji\\'>${p.emoji}</div>'">`:`<div class="${cls} emoji">${p.emoji}</div>`;
+function renderProducts(cid,items){
+  const c=$(cid);
+  if(!items.length){c.innerHTML=`<div class="empty-msg">🔍 ${t('none')}</div>`;return}
+  c.innerHTML=items.map(p=>{
+    const f=state.favs.includes(p.id);
+    return `<div class="product-card" onclick="openProduct('${p.id}')">
+      ${p.old?`<div class="disc-badge">-${Math.round((1-p.price/p.old)*100)}%</div>`:''}
+      <button class="fav-btn ${f?'active':''}" onclick="event.stopPropagation();toggleFav('${p.id}',this)">${HEART.replace('FILL',f?'currentColor':'none')}</button>
+      <div class="product-img-container">${imgTag(p,'product-img')}</div>
+      <div class="product-price">${p.price} ${CUR}${p.old?`<s>${p.old} ${CUR}</s>`:''}</div>
+      <div class="product-name">${p[state.lang]}</div>
+      <div class="product-dosage">${p.w}</div>
+      <div class="card-act" data-id="${p.id}"></div></div>`}).join('');
+  syncCards();
+}
+function syncCards(){
+  document.querySelectorAll('.card-act').forEach(w=>{
+    const id=w.dataset.id,q=state.cart[id]||0;
+    w.innerHTML=q?`<div class="stepper" onclick="event.stopPropagation()"><button onclick="cardQty('${id}',-1)">−</button><b>${q}</b><button onclick="cardQty('${id}',1)">+</button></div>`
+      :`<button class="add-btn" onclick="event.stopPropagation();cardQty('${id}',1)">+ ${t('cart')}</button>`;
+  });
+}
+function cardQty(id,d){d>0?addToCart(id):updateQty(id,-1)}
+
+function renderBanners(){
+  const L=state.lang;
+  $('banner-slider').innerHTML=BANNERS.map((b,i)=>`<div class="banner ${b.img?'has-img':''}" data-i="${i}" onclick="bannerGo(${i})" ${b.img?`style="background-image:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.05)),url('${b.img}')"`:''}>
+    ${b.title[L]?`<h3>${b.title[L]}</h3>`:''}${b.text[L]?`<p>${b.text[L]}</p>`:''}</div>`).join('');
+  BANNERS.forEach((b,i)=>{if(!b.img)return;const im=new Image();im.onerror=()=>{const e=document.querySelector(`.banner[data-i="${i}"]`);if(e){e.classList.remove('has-img');e.style.backgroundImage='';}};im.src=b.img});
+  $('banner-dots').innerHTML=BANNERS.length>1?BANNERS.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join(''):'';
+}
+function bannerGo(i){const l=BANNERS[i].link;if(!l)return;l==='catalog'?(state.cat='all',renderCats(),renderCatalog(),go('catalog')):filterCat(l)}
+let bannerTimer;
+function initBannerSlider(){
+  const sl=$('banner-slider');
+  sl.addEventListener('scroll',()=>{const i=Math.round(sl.scrollLeft/sl.clientWidth);document.querySelectorAll('#banner-dots i').forEach((d,k)=>d.classList.toggle('on',k===i))});
+  clearInterval(bannerTimer);
+  bannerTimer=setInterval(()=>{if(state.page!=='home'||BANNERS.length<2)return;const i=(Math.round(sl.scrollLeft/sl.clientWidth)+1)%BANNERS.length;sl.scrollTo({left:i*sl.clientWidth,behavior:'smooth'})},4500);
+}
+function renderCats(){
+  $('home-categories').innerHTML=CATS.filter(c=>c.id!=='all').map(c=>`<div class="category-item" onclick="filterCat('${c.id}')"><div class="category-icon">${c.emoji}</div><span>${c[state.lang]}</span></div>`).join('');
+  $('catalog-tabs').innerHTML=CATS.map(c=>`<button class="tab-btn ${state.cat===c.id?'active':''}" onclick="filterCat('${c.id}')">${c[state.lang]}</button>`).join('');
+}
+function filterCat(id){state.cat=id;renderCats();renderCatalog();if(state.page!=='catalog')go('catalog')}
+function renderHome(){
+  renderProducts('popular-products',PRODUCTS.slice(0,4));
+  const d=PRODUCTS.filter(p=>p.old);
+  $('disc-wrap').classList.toggle('hidden',!d.length);
+  if(d.length)renderProducts('discount-products',d);
+  renderRecent();
+}
+function renderRecent(){
+  const items=load(LS.recent,[]).map(byId).filter(Boolean).slice(0,4),w=$('recent-wrap');
+  if(!items.length){w.innerHTML='';return}
+  w.innerHTML=`<div class="section-title"><h2>${t('recent')}</h2></div><div class="product-grid" id="recent-grid"></div>`;
+  renderProducts('recent-grid',items);
+}
+
+/* ---------- каталог и поиск ---------- */
+function renderCatalog(){
+  let a=PRODUCTS.slice();
+  if(state.cat!=='all')a=a.filter(p=>p.cat===state.cat);
+  const q=state.q.trim().toLowerCase();
+  if(q)a=a.filter(p=>[p.tg,p.ru,p.en].some(s=>s.toLowerCase().includes(q)));
+  if(sortBy==='asc')a.sort((x,y)=>x.price-y.price);
+  if(sortBy==='desc')a.sort((x,y)=>y.price-x.price);
+  if(sortBy==='az')a.sort((x,y)=>x[state.lang].localeCompare(y[state.lang]));
+  $('catalog-count').textContent=`${a.length} ${t('found')}`;
+  renderProducts('catalog-products',a);
+}
+function onSearch(v){state.q=v;$('s-clear').style.display=v?'block':'none';if(state.page!=='catalog')go('catalog');renderCatalog()}
+function clearSearch(){$('search-input').value='';onSearch('')}
+
+/* ---------- товар ---------- */
+function openProduct(id){
+  const p=byId(id);if(!p)return;
+  save(LS.recent,[id,...load(LS.recent,[]).filter(x=>x!==id)].slice(0,8));
+  const f=state.favs.includes(id),catName=CATS.find(c=>c.id===p.cat)[state.lang];
+  const rel=PRODUCTS.filter(x=>x.cat===p.cat&&x.id!==id).slice(0,4);
+  $('product-detail-content').innerHTML=`
+    ${imgTag(p,'detail-img')}
+    <div class="detail-title">${p[state.lang]}</div>
+    <div class="detail-sub">${p.w} · ${catName}</div>
+    <div class="detail-price-row"><div class="detail-price">${p.price} ${CUR}</div>${p.old?`<s>${p.old} ${CUR}</s>`:''}</div>
+    <div class="stock-info">✓ ${t('inStock')}</div>
+    <div class="detail-actions">
+      <div class="card-act" data-id="${id}"></div>
+      <button class="icon-btn dfav ${f?'active':''}" onclick="toggleFav('${id}',this)">${HEART.replace('FILL',f?'currentColor':'none')}</button>
+      <button class="icon-btn" onclick="shareProduct('${id}')"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.7 10.7l6.6-3.4M8.7 13.3l6.6 3.4M18 8a3 3 0 100-6 3 3 0 000 6zM6 15a3 3 0 100-6 3 3 0 000 6zM18 22a3 3 0 100-6 3 3 0 000 6z"/></svg></button>
+    </div>
+    ${rel.length?`<div class="section-title"><h2>${t('similar')}</h2></div><div class="product-grid" id="rel-grid"></div>`:''}`;
+  syncCards();
+  if(rel.length)renderProducts('rel-grid',rel);
+  go('product');
+}
+function shareProduct(id){
+  const p=byId(id),txt=`${p[state.lang]} — ${p.price} ${CUR}`;
+  if(navigator.share)navigator.share({title:'JAIHUN MARKET',text:txt,url:location.href}).catch(()=>{});
+  else if(navigator.clipboard)navigator.clipboard.writeText(`${txt} ${location.href}`).then(()=>toast('✅ '+t('copied')));
+}
+
+/* ---------- корзина ---------- */
+function addToCart(id){state.cart[id]=(state.cart[id]||0)+1;save(LS.cart,state.cart);updateCartUI();toast(`✅ ${byId(id)[state.lang]} ${t('added')}`)}
+function removeFromCart(id){delete state.cart[id];save(LS.cart,state.cart);updateCartUI();renderCart()}
+function updateQty(id,d){const n=(state.cart[id]||0)+d;if(n<=0)return removeFromCart(id);state.cart[id]=n;save(LS.cart,state.cart);updateCartUI();renderCart()}
+function clearCart(){state.cart={};save(LS.cart,state.cart);updateCartUI();renderCart()}
+function updateCartUI(){
+  const c=count();
+  [$('cart-badge'),$('nav-badge')].forEach(b=>{b.style.display=c?'flex':'none';b.textContent=c});
+  syncCards();renderBar();
+}
+function renderBar(){
+  const c=count(),b=$('cart-bar');
+  if(!c||state.page==='cart'){b.style.display='none';return}
+  b.style.display='flex';
+  b.innerHTML=`<span>🛒 ${t('cart')} · ${c} ${t('pcs')}</span><span>${subtotal()} ${CUR}</span>`;
+}
+function renderCart(){
+  const ids=Object.keys(state.cart).filter(id=>byId(id));
+  const empty=!ids.length;
+  $('cart-empty').classList.toggle('hidden',!empty);
+  $('checkout-section').classList.toggle('hidden',empty);
+  $('free-bar').classList.toggle('hidden',empty);
+  if(empty){$('cart-items').innerHTML='';return}
+  $('cart-items').innerHTML=ids.map(id=>{
+    const p=byId(id),q=state.cart[id];
+    return `<div class="cart-item">${imgTag(p,'cart-item-img')}<div class="cart-item-info">
+      <div class="cart-item-title">${p[state.lang]}</div><div class="cart-item-price">${p.price*q} ${CUR}</div>
+      <div class="cart-item-actions"><div class="qty-control"><button class="qty-btn" onclick="updateQty('${id}',-1)">−</button><span class="qty-val">${q}</span><button class="qty-btn" onclick="updateQty('${id}',1)">+</button></div>
+      <button class="remove-btn" onclick="removeFromCart('${id}')"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div></div></div>`}).join('');
+  const s=subtotal(),f=fee(s),left=FREE-s;
+  $('sum-sub').textContent=`${s} ${CUR}`;
+  $('sum-del').textContent=f?`${f} ${CUR}`:t('free');
+  $('sum-total').textContent=`${s+f} ${CUR}`;
+  $('free-bar').innerHTML=(left>0?`<div class="fb-t">🚚 ${t('left').replace('{n}',left+' '+CUR)}</div>`:`<div class="fb-t ok">🎉 ${t('freeOk')}</div>`)+`<div class="fb-track"><i style="width:${Math.min(100,s/FREE*100)}%"></i></div>`;
+  if(!$('name-input').value)$('name-input').value=state.profile.name||'';
+  if(!$('phone-input').value)$('phone-input').value=state.profile.phone||'';
+  if(!$('address-input').value)$('address-input').value=state.profile.address||'';
+}
+function maskPhone(e){
+  let d=e.target.value.replace(/\D/g,'');if(d.startsWith('992'))d=d.slice(3);d=d.slice(0,9);
+  let o='+992';if(d)o+=' '+d.slice(0,2);if(d.length>2)o+=' '+d.slice(2,5);if(d.length>5)o+=' '+d.slice(5,7);if(d.length>7)o+=' '+d.slice(7,9);
+  e.target.value=d?o:'';
+}
+
+/* ---------- избранное ---------- */
+function toggleFav(id,btn){
+  const i=state.favs.indexOf(id);i>-1?state.favs.splice(i,1):state.favs.push(id);
+  save(LS.favs,state.favs);
+  if(btn){btn.classList.toggle('active',i<0);btn.querySelector('svg').setAttribute('fill',i<0?'currentColor':'none')}
+  if(state.page==='favorites')renderFavs();
+}
+function renderFavs(){
+  const a=PRODUCTS.filter(p=>state.favs.includes(p.id));
+  $('favorites-empty').classList.toggle('hidden',!!a.length);
+  if(a.length)renderProducts('favorites-list',a);else $('favorites-list').innerHTML='';
+}
+
+/* ---------- заказ ---------- */
+function checkout(method){
+  const name=$('name-input').value.trim(),phone=$('phone-input').value.trim(),address=$('address-input').value.trim();
+  if(phone.replace(/\D/g,'').length<12){toast('📞 '+t('badPhone'));$('phone-input').focus();return}
+  const rows=Object.entries(state.cart).map(([id,q])=>{const p=byId(id);return p&&{n:p[state.lang],q,s:p.price*q}}).filter(Boolean);
+  const sub=rows.reduce((a,r)=>a+r.s,0),f=fee(sub),total=sub+f;
+  let txt=`🛒 *Супориши нав аз JAIHUN MARKET!*\n\n`;
+  if(name)txt+=`👤 Ном: ${name}\n`;
+  txt+=`📞 Телефон: ${phone}\n`;
+  if(address)txt+=`📍 Суроға: ${address}\n`;
+  txt+=`\n📦 *Таркиби фармоиш:*\n`+rows.map(r=>`- ${r.n} (${r.q} шт) = ${r.s} ${CUR}`).join('\n');
+  txt+=`\n\n🚚 Интиқол: ${f?f+' '+CUR:'Ройгон'}\n💰 *Ҳамагӣ: ${total} ${CUR}*\n\n_${t('orderMsg')}_`;
+  const enc=encodeURIComponent(txt);
+  window.open(method==='wa'?`https://wa.me/${WA_PHONE}?text=${enc}`:`https://t.me/share/url?url=${encodeURIComponent('Заказ JAIHUN MARKET')}&text=${enc}`,'_blank');
+  save(LS.orders,[{date:new Date().toLocaleString(),rows,total},...load(LS.orders,[])].slice(0,20));
+  Object.assign(state.profile,{name:name||state.profile.name,phone,address:address||state.profile.address});
+  save(LS.profile,state.profile);renderProfile();
+  toast('✅ '+t('sent'));clearCart();
+}
+
+/* ---------- профиль ---------- */
+function renderProfile(){
+  const p=state.profile;
+  $('prof-name').textContent=(p.name||t('guest'))+' ✎';
+  $('prof-phone').textContent=p.phone||t('noPhone');
+  $('avatar-img').style.display=p.avatar?'block':'none';
+  $('avatar-letter').style.display=p.avatar?'none':'block';
+  if(p.avatar)$('avatar-img').src=p.avatar;else $('avatar-letter').textContent=p.name?p.name[0].toUpperCase():'J';
+}
+function uploadAvatar(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{state.profile.avatar=ev.target.result;save(LS.profile,state.profile);renderProfile();toast('✅ '+t('saved'))};
+  r.readAsDataURL(f);
+}
+function editField(field){openModal('input',field)}
+function clearData(){if(!confirm(t('confirm')))return;localStorage.clear();location.reload()}
+
+/* ---------- модальное окно ---------- */
+function openModal(type,field){
+  const ok=$('modal-ok'),cancel=$('modal-cancel'),inp=$('modal-input'),text=$('modal-text');
+  cancel.textContent=t('cancel');cancel.style.display='block';ok.style.display='none';inp.style.display='none';
+  if(type==='orders'){
+    $('modal-title').textContent=t('myOrders');
+    const o=load(LS.orders,[]);
+    text.innerHTML=o.length?o.map(r=>`<div class="order-row"><div style="color:var(--text-muted);font-size:11px">${r.date}</div>${r.rows.map(x=>`${x.n} × ${x.q}`).join(', ')}<div><b>${r.total} ${CUR}</b></div></div>`).join(''):`<div style="padding:20px 0">${t('noOrders')}</div>`;
+  }else if(type==='about'){
+    $('modal-title').textContent=t('about');text.textContent=t('aboutText');
+  }else if(type==='support'){
+    $('modal-title').textContent=t('support');
+    text.innerHTML=`<div style="font-size:16px;font-weight:700;color:var(--primary);margin:20px 0">${SUPPORT}</div>`;
+    ok.style.display='block';ok.textContent=t('call');ok.onclick=()=>{location.href='tel:'+SUPPORT.replace(/\s/g,'')};
+  }else if(type==='input'){
+    $('modal-title').textContent=field==='name'?t('newName'):t('newAddr');text.textContent='';
+    inp.style.display='block';inp.value=state.profile[field]||'';
+    ok.style.display='block';ok.textContent=t('save');
+    ok.onclick=()=>{state.profile[field]=inp.value.trim();save(LS.profile,state.profile);renderProfile();closeModal();toast('✅ '+t('saved'))};
+    setTimeout(()=>inp.focus(),100);
+  }
+  $('custom-modal').classList.add('active');
+}
+function closeModal(){$('custom-modal').classList.remove('active')}
+
+let toastT;
+function toast(m){const e=$('toast');e.textContent=m;e.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('show'),2200)}
 </script>
 </body>
 </html>
