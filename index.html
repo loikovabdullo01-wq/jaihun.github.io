@@ -365,12 +365,8 @@ const START=Date.now();
    link — куда вести по нажатию: 'catalog', id категории (b1,b2,g1,mk,sw,ch) или '' (никуда).
    Хотите ещё баннер — скопируйте блок {...} и добавьте через запятую. */
 const BANNERS=[
- {img:'banner1.jpg',link:'catalog',
-  title:{tg:'Тахфифот то 30%',ru:'Скидки до 30%',en:'Up to 30% OFF'},
-  text:{tg:'Ба ҳамаи маҳсулоти тоза',ru:'На все свежие продукты',en:'On all fresh products'}},
- {img:'banner2.jpg',link:'sw',
-  title:{tg:'Интиқоли ройгон',ru:'Бесплатная доставка',en:'Free Delivery'},
-  text:{tg:'Барои фармоишҳо аз 200 с.',ru:'При заказе от 200 с.',en:'On orders over 200 s.'}}
+ {img:'1.webp',link:'catalog',title:{tg:'',ru:'',en:''},text:{tg:'',ru:'',en:''}},
+ {img:'banner2.jpg',link:'',title:{tg:'',ru:'',en:''},text:{tg:'',ru:'',en:''}}
 ];
 const $=id=>document.getElementById(id);
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
